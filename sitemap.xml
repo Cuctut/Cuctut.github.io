@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://cuctut.github.io/about/</loc>
+    <lastmod>2023-05-21T21:38:43+08:00</lastmod>
+  </url><url>
+    <loc>https://cuctut.github.io/</loc>
+    <lastmod>2023-05-21T21:38:43+08:00</lastmod>
+  </url><url>
     <loc>https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/</loc>
     <lastmod>2023-05-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cuctut.github.io/categories/</loc>
-    <lastmod>2023-05-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://cuctut.github.io/</loc>
     <lastmod>2023-05-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cuctut.github.io/tags/java-spring/</loc>
@@ -38,7 +41,7 @@
     <loc>https://cuctut.github.io/posts/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B/</loc>
     <lastmod>2023-03-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://cuctut.github.io/series/%E4%B8%BB%E9%A2%98%E6%96%87%E6%A1%A3/</loc>
+    <loc>https://cuctut.github.io/series/%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2/</loc>
     <lastmod>2023-03-28T00:00:00+00:00</lastmod>
   </url>
 </urlset>
