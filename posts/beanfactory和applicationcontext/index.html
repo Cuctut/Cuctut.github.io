@@ -3,18 +3,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Cuctut&#39;s blog | Tags</title>
+    <title>Cuctut&#39;s blog | BeanFactory和ApplicationContext</title>
     <meta name="description" content=" ">
-    <link rel="canonical" href="https://cuctut.github.io/tags/" />
+    <link rel="canonical" href="https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/" />
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <meta property="og:title" content="Tags" />
+    <meta property="og:title" content="BeanFactory和ApplicationContext" />
 <meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://cuctut.github.io/tags/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-21T19:01:29+08:00" />
+<meta property="article:modified_time" content="2023-05-21T00:00:00+00:00" />
+<meta property="og:see_also" content="https://cuctut.github.io/posts/spring%E6%A6%82%E5%BF%B5%E7%AF%87/" />
 
 
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Tags"/>
+<meta name="twitter:title" content="BeanFactory和ApplicationContext"/>
 <meta name="twitter:description" content=""/>
 
     
@@ -183,18 +186,10 @@
 
 
         <div id="content">
-    
 
 
 
 
-
-
-    
-        
-        
-        
-    
 
 
 
@@ -202,12 +197,30 @@
     <div class="hero">
         
             <div class="hero-img">
-                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/tag.jpg" alt="">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/default/default3.jpg" alt="">
             </div>
         
         <div class="hero-content">
-            <div class="hero-title">标签</div>
-            <div>description of tags page</div>
+            <div class="hero-title">BeanFactory和ApplicationContext</div>
+            <div class="hero-subtitle"></div>
+            <div class="hero-date">
+                    <span class="no-wrap"><i class="fa fa-calendar"></i> 发布于: 2022-5-21 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-calendar-check-o"></i> 更新于: 2023-5-21 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-folder"></i>
+                        收录于:
+                        
+                            <a href='
+                                /categories/java-spring
+                            '>
+                                Java Spring
+                            </a>
+                    </span>    
+            </div>
+            <div class="timelong">
+                <span class="no-wrap"><i class="fa fa-pencil"></i> 文章字数: 1316 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-clock-o"></i> 阅读时间: 3 分钟 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-eye"></i> 阅读量: <span id="busuanzi_value_page_pv"></span></span>
+            </div>
         </div>
     </div>
 
@@ -226,7 +239,7 @@
     
 
 
-<div class="taxo-body">
+<div class="content-root">
     <div class="long">
         <button class="tosides-1 text-wbd">
             <i class="fa fa-arrow-right"></i>
@@ -239,29 +252,104 @@
         </button>
     </div>
     
-        <div class='taxo-row taxo-row-tag'>
-            
-                
-                    
-
-
-
-<div class="taxo-col taxo-col-tag">
-    <a href="https://cuctut.github.io/tags/java-spring/">
-        <div class="tag-taxo-card">
-            <div class="tag-taxo-text">
-                <span><i class="fa fa-tag"></i></span>
-                Java Spring
+        <div class="content">
+            <div class="content-self">
+                <h1 id="beanfactory">BeanFactory</h1>
+<p>BeanFactory 简单粗暴，可以理解为就是个 HashMap，Key 是 BeanName，Value 是 Bean 实
+例。通常只提供注册（put），获取（get）这两个功能，可以称之为 “低级容器”。</p>
+<p><a href="https://cuctut.notion.site/BeanFactory-47689cca8ab6470dbe5b27ab709cd2c9">BeanFactory简单用法</a></p>
+<h1 id="applicationcontext">ApplicationContext</h1>
+<p>ApplicationContext 可以称之为 “高级容器”。因为他比 BeanFactory 多了更多的功能。他继承了多个接口。因此具备了更多的功能。例如资源的获取，支持多种消息（例如 JSP tag 的支持），对 BeanFactory 多了工具级别的支持等待。所以你看他的名字，已经不是 BeanFactory 之类的工厂了，而是 “应用上下文”， 代表着整个大容器的所有功能。该接口定义了一个 refresh 方法，此方法是所有阅读 Spring 源码的人的最熟悉的方法，用于刷新整个容器，即重新加载/刷新所有的 bean。</p>
+<p><a href="https://cuctut.notion.site/ApplicationContext-7835872478f545c3b0c25b196f45d9a8">ApplicationContext简单用法</a></p>
+<h1 id="两者的关系">两者的关系</h1>
+<p><a href="https://cuctut.notion.site/BeanFactory-ApplicationContext-6b65808807454a018e94581b20aa774c">原笔记</a></p>
+<h2 id="继承">继承</h2>
+<p>在 IDEA 内查看 ApplicationContext 的继承体系，如下：</p>
+<p><img src="/images/BeanFactoryAndApplicationContext.png" alt="BeanFactoryAndApplicationContext"></p>
+<p>ApplicationContext 接口继承自 BeanFactory</p>
+<h2 id="先后">先后</h2>
+<ul>
+<li>BeanFactory 是 Spring 的早期接口，称为 Spring 的 Bean 工厂；</li>
+<li>ApplicationContext 是后期更高级接口,称之为 Spring 容器；</li>
+</ul>
+<h2 id="扩展">扩展</h2>
+<p>Bean 创建的主要逻辑和功能都被封装在 BeanFactory 中，ApplicationContext 继承了 BeanFactory，内部还维护着 BeanFactory 的引用，ApplicationContext 在 BeanFactory 基础上对功能进行了扩展，如：监听功能、国际化功能等。BeanFactory 的 API 更偏向底层，ApplicationContext 的 API 大多数是对这些底层 API 的封装;</p>
+<p><img src="/images/BeanFactoryAndApplicationContext1.png" alt="BeanFactoryAndApplicationContext"></p>
+<ul>
+<li>继承MessageSource，因此支持国际化。</li>
+<li>统一的资源文件访问方式。</li>
+<li>提供在监听器中注册bean的事件。</li>
+<li>同时加载多个配置文件。</li>
+<li>载入多个（有继承关系）上下文 ，使得每一个上下文都专注于一个特定的层次，比如应用的web层。</li>
+</ul>
+<p>所以, ApplicationContext 与 BeanFactory 既有<strong>继承关系</strong>，又有<strong>融合关系</strong>。</p>
+<h1 id="两者的区别">两者的区别</h1>
+<h2 id="bean-的初始化时机">Bean 的初始化时机</h2>
+<ul>
+<li><strong>BeanFactroy</strong> 采用的是延迟加载形式来注入 Bean 的，即只有在使用到某个 Bean 时(调用getBean())，才对该 Bean 进行加载实例化。这样，我们就不能发现一些存在的Spring的配置问题。如果Bean的某一个属性没有注入，BeanFacotry 加载后，直至第一次使用调用 getBean 方法才会抛出异常。</li>
+<li><strong>ApplicationContext</strong> 是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现 Spring 中存在的配置错误，这样有利于检查所依赖属性是否注入。ApplicationContext 启动后预载入所有的单实例Bean，通过预载入单实例 bean，确保当你需要的时候，就不用等待，因为它们已经创建好了。</li>
+</ul>
+<h2 id="创建方式">创建方式</h2>
+<p>BeanFactory 通常以编程的方式被创建，ApplicationContext 还能以声明的方式创建，如使用 ContextLoader。</p>
+<h2 id="注册方式">注册方式</h2>
+<p>两者都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：<br>
+BeanFactory 需要手动注册，而 ApplicationContext 则是自动注册。</p>
+<h1 id="其他">其他</h1>
+<h2 id="applicationcontext-常用实现">ApplicationContext 常用实现</h2>
+<ul>
+<li>FileSystemXmlApplicationContext ：此容器从一个XML文件中加载beans的定义，XML Bean 配置文件的全路径名必须提供给它的构造函数。</li>
+<li>ClassPathXmlApplicationContext：此容器也从一个XML文件中加载beans的定义，这里，需要正确设置classpath因为这个容器将在classpath里找bean配置。</li>
+<li>WebXmlApplicationContext：此容器加载一个XML文件，此文件定义了一个WEB应用的所有 bean。</li>
+</ul>
             </div>
+            
+                <div class="tags">
+                    
+                    <span class="down-type-item">
+                        <div class="type-text">
+                            <a href='
+                                        /tags/java-spring
+                                    '>
+                                <i class="fa fa-tag"></i> Java Spring
+                            </a>
+                        </div>
+                    </span>
+                    
+                </div>
+            
         </div>
-    </a>
+        
+            
+                <div class="pre-next">
+                    
+    
+        
+        <a href="https://cuctut.github.io/posts/spring%E6%A6%82%E5%BF%B5%E7%AF%87/" class="pre pre-last" style="text-align: center;">
+            <span class="pre-icon"><i class="fa fa-hand-o-left"></i></span>
+            <div class="pre-title-root">
+                <span>Spring概念篇</span>
+            </div>
+        </a>
+        
+    
+    
+
+                </div>
+            
+        
+    
 </div>
 
-                
+    
+        <div class="content-last">
+            
+                <button class="aixin content-last-item efct-button">
+                    <i class="fa fa-heart"></i>
+                </button>
+            
             
         </div>
     
-</div>
 
 
             </div>
@@ -338,33 +426,16 @@
 
 
 
+    
+    
+
 
 <div class="other">
     <div class="other-up">
-        <div class="other-qita text-wbd">最新文章</div>
+        <div class="other-qita text-wbd">相关文章</div>
         <div class="xian"></div>
     </div>
     <div class="list">
-        
-            <a href="https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/">
-                
-<a href="https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/">
-    <div class="list-item">
-        <div class="icon-other-root">
-            
-                <div class="icon-other" style="background-image: url( /images/default/default3.jpg );"></div>
-            
-        </div>
-        <div class="list-right">
-            <div class="other-title">
-                BeanFactory和ApplicationContext
-            </div>
-            <div class="other-summary"></div>
-            <div class="other-date">2022-5-21</div>
-        </div>
-    </div>
-</a>
-            </a>
         
             <a href="https://cuctut.github.io/posts/spring%E6%A6%82%E5%BF%B5%E7%AF%87/">
                 
@@ -417,6 +488,46 @@
 
             </div>
         </div>
+    </div>
+</div>
+
+    
+
+<div class="sponsor">
+    <div class="sponsor-self">
+        <div class="sponsor-title">赞赏</div>
+        <div class="sponsor-btn">
+            
+                
+                    
+                        <div class="sponsor-btn-1 border-r">Wechat</div>
+                    
+                
+                
+            
+                
+                    
+                        <div class="sponsor-btn-2 border-l">Alipay</div>
+                    
+                
+                
+            
+        </div>
+        
+        <div class="sponsor-img">
+            
+                
+                    <img class="sponsor-img-1" src="/images/sponsor/wechat.jpeg" alt="">
+                
+                
+            
+                
+                    <img class="sponsor-img-2" src="/images/sponsor/alipay.jpeg" alt="" style="display: none;">
+                
+                
+            
+        </div>
+        <div class="cancel efct-button">取消</div>
     </div>
 </div>
 

@@ -3,18 +3,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Cuctut&#39;s blog | Tags</title>
+    <title>Cuctut&#39;s blog | Spring概念篇</title>
     <meta name="description" content=" ">
-    <link rel="canonical" href="https://cuctut.github.io/tags/" />
+    <link rel="canonical" href="https://cuctut.github.io/posts/spring%E6%A6%82%E5%BF%B5%E7%AF%87/" />
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <meta property="og:title" content="Tags" />
+    <meta property="og:title" content="Spring概念篇" />
 <meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://cuctut.github.io/tags/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cuctut.github.io/posts/spring%E6%A6%82%E5%BF%B5%E7%AF%87/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-21T11:45:14+08:00" />
+<meta property="article:modified_time" content="2023-05-21T00:00:00+00:00" />
+<meta property="og:see_also" content="https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/" />
 
 
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Tags"/>
+<meta name="twitter:title" content="Spring概念篇"/>
 <meta name="twitter:description" content=""/>
 
     
@@ -183,18 +186,10 @@
 
 
         <div id="content">
-    
 
 
 
 
-
-
-    
-        
-        
-        
-    
 
 
 
@@ -202,12 +197,30 @@
     <div class="hero">
         
             <div class="hero-img">
-                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/tag.jpg" alt="">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/default/default3.jpg" alt="">
             </div>
         
         <div class="hero-content">
-            <div class="hero-title">标签</div>
-            <div>description of tags page</div>
+            <div class="hero-title">Spring概念篇</div>
+            <div class="hero-subtitle"></div>
+            <div class="hero-date">
+                    <span class="no-wrap"><i class="fa fa-calendar"></i> 发布于: 2022-5-21 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-calendar-check-o"></i> 更新于: 2023-5-21 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-folder"></i>
+                        收录于:
+                        
+                            <a href='
+                                /categories/java-spring
+                            '>
+                                Java Spring
+                            </a>
+                    </span>    
+            </div>
+            <div class="timelong">
+                <span class="no-wrap"><i class="fa fa-pencil"></i> 文章字数: 1185 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-clock-o"></i> 阅读时间: 3 分钟 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-eye"></i> 阅读量: <span id="busuanzi_value_page_pv"></span></span>
+            </div>
         </div>
     </div>
 
@@ -226,7 +239,7 @@
     
 
 
-<div class="taxo-body">
+<div class="content-root">
     <div class="long">
         <button class="tosides-1 text-wbd">
             <i class="fa fa-arrow-right"></i>
@@ -239,29 +252,172 @@
         </button>
     </div>
     
-        <div class='taxo-row taxo-row-tag'>
-            
-                
-                    
-
-
-
-<div class="taxo-col taxo-col-tag">
-    <a href="https://cuctut.github.io/tags/java-spring/">
-        <div class="tag-taxo-card">
-            <div class="tag-taxo-text">
-                <span><i class="fa fa-tag"></i></span>
-                Java Spring
+        <div class="content">
+            <div class="content-self">
+                <h1 id="为什么使用spring框架">为什么使用Spring框架？</h1>
+<ul>
+<li>轻量：解决企业级应用开发的复杂性，即简化Java开发</li>
+<li>IOC：通过IOC容器对Bean的生命周期进行管理，让开发者只需关心业务的需求，同时实现对象依赖松耦合的管理</li>
+<li>AOP：通过切面的方式对功能进行增强，减少代码的侵入性</li>
+<li>MVC：Spring提供SpringMVC框架对Web开发进行支持</li>
+<li>事务管理：声明式事务的支持，只需要通过配置就可以完成对事务的管理，可以通过AOP实现对事务的统一管理</li>
+<li>生态支持：拥有强大的生态和社区</li>
+</ul>
+<h1 id="spring模块">Spring模块</h1>
+<p><a href="https://docs.spring.io/spring-framework/docs/5.0.0.RC3/spring-framework-reference/overview.html#overview-modules">Spring模块</a>有大约 20 个，它们提供的特性组成了Spring框架。</p>
+<p>这些模块分：Core Container, Data Access/Integration, Web, AOP, Instrumentation, Messaging 和 Test，如下图所示。</p>
+<p><img src="https://docs.spring.io/spring-framework/docs/5.0.0.RC3/spring-framework-reference/images/spring-overview.png" alt="Spring Framework Modules"></p>
+<h1 id="spring的两大核心概念">Spring的两大核心概念</h1>
+<p>IOC（Inversion of Control，控制反转）和AOP（Aspect-Oriented Programming，面向切面编程）是两种开发中的重要概念。</p>
+<h2 id="ioc-inversion-of-control控制反转">IOC (Inversion of Control，控制反转)</h2>
+<p>IOC是一种设计原则，它将控制权的获取和管理从应用程序代码转移到一个外部容器或框架。在传统的编程模型中，应用程序代码通常会直接创建和管理对象的依赖关系。而在IOC模式下，应用程序通过定义对象之间的依赖关系，并且将对象的创建和生命周期交给外部容器来管理。外部容器负责创建、装配和管理对象，并且在需要时将对象注入到应用程序中。这样可以实现对象之间的解耦和灵活性。</p>
+<h3 id="ioc-的实现机制">IOC 的实现机制</h3>
+<p>Spring 中的 IOC 的实现原理就是工厂模式加反射机制。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="kd">interface</span> <span class="nc">Fruit</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">eat</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Apple</span> <span class="kd">implements</span> <span class="n">Fruit</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">eat</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Apple&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Orange</span> <span class="kd">implements</span> <span class="n">Fruit</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">eat</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Orange&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Factory</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Fruit</span> <span class="nf">getInstance</span><span class="o">(</span><span class="n">String</span> <span class="n">ClassName</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Fruit</span> <span class="n">f</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">f</span><span class="o">=(</span><span class="n">Fruit</span><span class="o">)</span><span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">ClassName</span><span class="o">).</span><span class="na">newInstance</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">f</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Fruit</span> <span class="n">f</span><span class="o">=</span><span class="n">Factory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&#34;Apple&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="o">(</span><span class="n">f</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">f</span><span class="o">.</span><span class="na">eat</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="aop-aspect-oriented-programming面向切面编程">AOP (Aspect-Oriented Programming，面向切面编程)</h2>
+<p>AOP是一种编程范式，它通过将横切关注点（cross-cutting concerns）从主要业务逻辑中分离出来，实现模块化的开发和维护。横切关注点是那些存在于应用程序各个部分的功能需求，如日志记录、事务管理、安全性等，它们通常跨越多个对象和模块。AOP通过定义切面（aspect）来封装横切关注点，并将其与主要业务逻辑进行解耦。切面可以在应用程序运行时动态地织入到主要业务逻辑中，从而实现对横切关注点的统一管理和复用。</p>
+<h1 id="spring-中的设计模式">Spring 中的设计模式</h1>
+<ol>
+<li>工厂模式：BeanFactory就是简单工厂模式的体现，用来创建对象的实例；</li>
+<li>单例模式：Bean默认为单例模式；</li>
+<li>代理模式：Spring的AOP功能用到了JDK的动态代理和CGLIB字节码生成技术；</li>
+<li>模板方法：用来解决代码重复的问题。比如.RestTemplate, JmsTemplate, JpaTemplate；</li>
+<li>观察者模式：定义对象键一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都会得到通知被制动更新，如Spring中listener的实现–ApplicationListener。</li>
+</ol>
             </div>
+            
+                <div class="tags">
+                    
+                    <span class="down-type-item">
+                        <div class="type-text">
+                            <a href='
+                                        /tags/java-spring
+                                    '>
+                                <i class="fa fa-tag"></i> Java Spring
+                            </a>
+                        </div>
+                    </span>
+                    
+                </div>
+            
         </div>
-    </a>
+        
+            
+                <div class="pre-next">
+                    
+    
+        
+        <a href="https://cuctut.github.io/posts/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B/" class="pre">
+            <span class="pre-icon"><i class="fa fa-hand-o-left"></i></span>
+            <div class="pre-title-root">
+                <span>快速开始</span>
+            </div>
+        </a>
+        
+
+        
+        <a href="https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/" class="next">
+            <div class="next-title-root">
+                <span>BeanFactory和ApplicationContext</span>
+            </div>
+            <span class="next-icon"><i class="fa fa-hand-o-right"></i></span>
+        </a>
+        
+
+    
+    
+
+                </div>
+            
+        
+    
 </div>
 
-                
+    
+        <div class="content-last">
+            
+                <button class="aixin content-last-item efct-button">
+                    <i class="fa fa-heart"></i>
+                </button>
+            
             
         </div>
     
-</div>
 
 
             </div>
@@ -338,10 +494,13 @@
 
 
 
+    
+    
+
 
 <div class="other">
     <div class="other-up">
-        <div class="other-qita text-wbd">最新文章</div>
+        <div class="other-qita text-wbd">相关文章</div>
         <div class="xian"></div>
     </div>
     <div class="list">
@@ -358,26 +517,6 @@
         <div class="list-right">
             <div class="other-title">
                 BeanFactory和ApplicationContext
-            </div>
-            <div class="other-summary"></div>
-            <div class="other-date">2022-5-21</div>
-        </div>
-    </div>
-</a>
-            </a>
-        
-            <a href="https://cuctut.github.io/posts/spring%E6%A6%82%E5%BF%B5%E7%AF%87/">
-                
-<a href="https://cuctut.github.io/posts/spring%E6%A6%82%E5%BF%B5%E7%AF%87/">
-    <div class="list-item">
-        <div class="icon-other-root">
-            
-                <div class="icon-other" style="background-image: url( /images/default/default3.jpg );"></div>
-            
-        </div>
-        <div class="list-right">
-            <div class="other-title">
-                Spring概念篇
             </div>
             <div class="other-summary"></div>
             <div class="other-date">2022-5-21</div>
@@ -417,6 +556,46 @@
 
             </div>
         </div>
+    </div>
+</div>
+
+    
+
+<div class="sponsor">
+    <div class="sponsor-self">
+        <div class="sponsor-title">赞赏</div>
+        <div class="sponsor-btn">
+            
+                
+                    
+                        <div class="sponsor-btn-1 border-r">Wechat</div>
+                    
+                
+                
+            
+                
+                    
+                        <div class="sponsor-btn-2 border-l">Alipay</div>
+                    
+                
+                
+            
+        </div>
+        
+        <div class="sponsor-img">
+            
+                
+                    <img class="sponsor-img-1" src="/images/sponsor/wechat.jpeg" alt="">
+                
+                
+            
+                
+                    <img class="sponsor-img-2" src="/images/sponsor/alipay.jpeg" alt="" style="display: none;">
+                
+                
+            
+        </div>
+        <div class="cancel efct-button">取消</div>
     </div>
 </div>
 
