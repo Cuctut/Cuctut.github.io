@@ -3,18 +3,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Cuctut&#39;s blog | 博客部署</title>
+    <title>Cuctut&#39;s blog | Bean概念</title>
     <meta name="description" content=" ">
-    <link rel="canonical" href="https://cuctut.github.io/series/%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2/" />
+    <link rel="canonical" href="https://cuctut.github.io/posts/bean%E6%A6%82%E5%BF%B5/" />
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <meta property="og:title" content="博客部署" />
+    <meta property="og:title" content="Bean概念" />
 <meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://cuctut.github.io/series/%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cuctut.github.io/posts/bean%E6%A6%82%E5%BF%B5/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-22T08:19:22+08:00" />
+<meta property="article:modified_time" content="2022-05-22T00:00:00+00:00" />
+<meta property="og:see_also" content="https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/" /><meta property="og:see_also" content="https://cuctut.github.io/posts/spring%E6%A6%82%E5%BF%B5%E7%AF%87/" />
 
 
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="博客部署"/>
+<meta name="twitter:title" content="Bean概念"/>
 <meta name="twitter:description" content=""/>
 
     
@@ -183,29 +186,41 @@
 
 
         <div id="content">
-    
 
 
 
 
-
-
-    
-        
-    
 
 
 
 
     <div class="hero">
         
-            
-                <div class="hero-img">
-                    <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/default/default3.jpg" alt="">
-                </div>
-            
+            <div class="hero-img">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="https://images.unsplash.com/photo-1586685983913-5b3003fef6b3?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80" alt="">
+            </div>
+        
         <div class="hero-content">
-            <h1 class="hero-title">系列: 博客部署</h1>
+            <div class="hero-title">Bean概念</div>
+            <div class="hero-subtitle"></div>
+            <div class="hero-date">
+                    <span class="no-wrap"><i class="fa fa-calendar"></i> 发布于: 2022-5-22 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-calendar-check-o"></i> 更新于: 2022-5-22 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-folder"></i>
+                        收录于:
+                        
+                            <a href='
+                                /categories/java-spring
+                            '>
+                                Java Spring
+                            </a>
+                    </span>    
+            </div>
+            <div class="timelong">
+                <span class="no-wrap"><i class="fa fa-pencil"></i> 文章字数: 2357 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-clock-o"></i> 阅读时间: 5 分钟 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-eye"></i> 阅读量: <span id="busuanzi_value_page_pv"></span></span>
+            </div>
         </div>
     </div>
 
@@ -224,7 +239,7 @@
     
 
 
-<div class="terms-body">
+<div class="content-root">
     <div class="long">
         <button class="tosides-1 text-wbd">
             <i class="fa fa-arrow-right"></i>
@@ -237,55 +252,164 @@
         </button>
     </div>
     
-        <div class="terms-row">
+        <div class="content">
+            <div class="content-self">
+                <h1 id="什么是-spring-bean">什么是 Spring Bean？</h1>
+<p><strong>Spring Bean</strong> 是指在Spring容器中被管理的对象。可以是任何的Java对象，如实体类、服务类、数据访问对象(DAO)等。它们被 Spring IOC 容器初始化，装配，和管理。这些 Bean 根据容器中配置的元数据创建。比如，以 XML 文件中的形式定义。</p>
+<blockquote>
+<p>tip
+传统 Java Bean 由开发人员手动创建和管理生命周期，手动处理依赖关系，配置通常在代码中直接进行，维护性差。由于没有 AOP 概念，若要实现诸如事务管理、日志记录等横切功能，传统 Java Bean 通常需要开发人员手动编写和管理横切逻辑。而 Spring Bean 的特点解决了这些问题。</p>
+</blockquote>
+<h2 id="bean的特点">Bean的特点</h2>
+<p>Spring Bean具有以下特点：</p>
+<ul>
+<li><strong>生命周期管理</strong>：Spring 容器负责Bean的生命周期，它负责在需要时创建Bean实例、初始化 Bean、将依赖注入到 Bean 中以及在不再需要时销毁 Bean 实例。</li>
+<li><strong>依赖注入</strong>：Spring 容器通过依赖注入机制自动解决 Bean 之间的依赖关系。这意味着你可以使用注解或配置将其他 Bean 注入到你的 Bean 中，从而实现解耦和灵活性。</li>
+<li><strong>配置灵活性</strong>：Spring 容器允许通过配置文件或注解来定义 Bean 及其属性。这使得你可以轻松修改 Bean 的配置，而无需修改源代码。</li>
+<li><strong>面向切面编程（AOP）</strong>：Spring 的 AOP 功能可以与 Bean 一起使用，使你能够在应用程序中轻松实现横切关注点，例如日志记录、事务管理等。</li>
+</ul>
+<h2 id="bean的定义">Bean的定义</h2>
+<p>在Spring中，可以通过配置元数据来定义Bean，包括Bean的类型、属性值和依赖关系等。
+有三种重要的方法给 Spring 容器提供配置元数据：</p>
+<ul>
+<li>基于 XML 的配置</li>
+<li>基于 注解 的配置</li>
+<li>基于 java类 的配置</li>
+</ul>
+<h2 id="bean的作用域">Bean的作用域</h2>
+<p>Spring框架支持以下五种Bean的作用域：</p>
+<ol>
+<li><strong>singleton</strong> : Bean 在每个 Spring ioc 容器中只有一个实例。</li>
+<li><strong>prototype</strong>：一个 Bean 的定义可以有多个实例。</li>
+<li><strong>request</strong>：每次 http 请求都会创建一个 Bean，该作用域仅在基于 web 的 Spring ApplicationContext 情形下有效。</li>
+<li><strong>session</strong>：在一个 HTTP Session 中，一个 Bean 定义对应一个实例。该作用域仅在基于 web 的 Spring ApplicationContext 情形下有效。</li>
+<li><strong>global-session</strong>：在一个全局的 HTTP Session 中，一个 Bean 定义对应一个实例。该作用域仅在基于 web 的Spring ApplicationContext 情形下有效。</li>
+</ol>
+<blockquote>
+<p>tip
+缺省的 Spring Bean 的作用域是Singleton。使用 prototype 作用域需要慎重的思考，因为频繁创建和销毁 Bean 会带来很大的性能开销。</p>
+</blockquote>
+<h1 id="bean的生命周期">Bean的生命周期</h1>
+<p><img src="/images/creatBean.png" alt="CreatBean"></p>
+<p>Spring 容器管理 Bean 的整个生命周期，包括以下关键步骤：</p>
+<ol>
+<li>
+<p><strong>实例化</strong>（Instantiation）：</p>
+<ul>
+<li>根据 Bean 的定义，Spring 容器实例化 Bean 对象，并将其存储在容器中。Spring 框架会取出 BeanDefinition 的信息进行判断当前 Bean 的范围是否是 singleton 的，是否不是延迟加载的，是否不是 FactoryBean 等，最终将一个普通的 singleton 的 Bean 通过<strong>反射</strong>进行实例化；</li>
+</ul>
+</li>
+<li>
+<p><strong>属性注入</strong>（Dependency Injection）：</p>
+<ul>
+<li>Spring 容器检测 Bean 的<strong>依赖关系</strong>并将所需的依赖注入到 Bean 中，例如通过构造函数注入或 Setter 方法注入。</li>
+</ul>
+</li>
+<li>
+<p><strong>初始化</strong>（Initialization）：</p>
+<ul>
+<li>Bean 创建之后还仅仅是个&quot;半成品&quot;，还需要对 Bean 实例的属性进行填充、执行一些 Aware 接口方法、执行 BeanPostProcessor 方法、执行 InitializingBean 接口的初始化方法、执行自定义初始化init方法等。如果 Bean 实现了 InitializingBean 接口或在配置中指定了初始化方法，Spring 容器将调用 Bean 的初始化方法。</li>
+</ul>
+</li>
+<li>
+<p><strong>使用</strong>（In Use）：</p>
+<ul>
+<li>经过初始化阶段，Bean就成为了一个完整的Spring Bean，被存储到单例池 singletonObjects 中去了，Bean 可以在应用程序的其他组件中使用，执行它们的业务逻辑。</li>
+</ul>
+</li>
+<li>
+<p><strong>销毁</strong>（Destruction）：</p>
+<ul>
+<li>如果 Bean 实现了 DisposableBean 接口或在配置中指定了销毁方法，Spring 容器在销毁时调用 Bean 的销毁方法。</li>
+</ul>
+</li>
+</ol>
+<h2 id="bean的实例化过程">Bean的实例化过程</h2>
+<ul>
+<li>读取 BeanDefinition 到 BeanDefinitionMap</li>
+<li>执行 BeanDefinitionRegistryPostProcessor</li>
+<li>执行 BeanDefinitionPostProcessor</li>
+<li>创建 Bean 实例</li>
+</ul>
+<h2 id="bean的初始化过程">Bean的初始化过程</h2>
+<ul>
+<li>Bean 实例的属性填充</li>
+<li>Aware 接口属性注入</li>
+<li>BeanPostProcessor 的 before() 方法回调</li>
+<li>InitializingBean 接口的初始化方法回调</li>
+<li>自定义初始化方法 init 回调</li>
+<li>BeanPostProcessor 的 after() 方法回调</li>
+</ul>
+<h2 id="bean的三级缓存">Bean的三级缓存</h2>
+<p>Spring 提供了三级缓存存储完整 Bean 实例 和 半成品 Bean 实例，用于解决循环引用问题。</p>
+<p>在 DefaultListableBeanFactory 的上四级父类 DefaultSingletonBeanRegistry 中提供如下三个Map：</p>
+<p><img src="/images/3layers.png" alt="3layers"></p>
+<h1 id="bean的线程安全问题">Bean的线程安全问题</h1>
+<p>在 Spring 框架中，默认情况下，<strong>单例</strong> Bean 是线程安全的。Spring 容器在创建单例 Bean 时会确保只有一个实例，并在需要时共享该实例。这意味着多个线程可以<strong>同时访问同一个单例 Bean 实例</strong>，而无需担心并发问题。</p>
+<p>Spring 实现单例 Bean 的线程安全性有以下几个方面：</p>
+<ol>
+<li>
+<p><strong>无状态Bean</strong>：Spring 鼓励在单例 Bean 中避免使用实例变量（或将其保持在只读状态），从而避免了多个线程之间共享状态的风险。如果单例 Bean 是无状态的，那么多个线程之间并发访问不会引发竞态条件。</p>
+</li>
+<li>
+<p><strong>依赖注入</strong>： Spring 通过依赖注入的方式来管理 Bean 之间的依赖关系。当多个线程同时访问一个单例 Bean 时，它们将共享相同的依赖项实例。由于依赖项是单独的 Bean 实例，并且默认也是单例的，因此它们可以安全地被多个线程共享。</p>
+</li>
+<li>
+<p><strong>线程封闭性</strong>： Spring 单例 Bean 默认是无状态的，但如果需要在单例 Bean 中使用可变状态，则可以使用线程封闭性来确保线程安全。线程封闭性是指将可变状态限制在每个线程的范围内，每个线程独立拥有自己的状态实例。通过使用线程封闭性，可以确保每个线程独立访问自己的状态，从而避免并发问题。</p>
+</li>
+</ol>
+<h2 id="多线程下spring如何确保有状态的bean的线程安全">多线程下，Spring如何确保有状态的Bean的线程安全</h2>
+<p>在一般情况下，只有无状态的 Bean 才可以在多线程环境下共享，在 Spring 中，绝大部分 Bean 都可以声明为 singleton 作用域，因为 Spring 对一些 Bean 中非线程安全状态采用 ThreadLocal 进行处理，解决线程安全问题。</p>
+<p>ThreadLocal和线程同步机制都是为了解决多线程中相同变量的访问冲突问题。同步机制采用了“时间换空间”的方式，仅提供一份变量，不同的线程在访问前需要获取锁，没获得锁的线程则需要排队。而ThreadLocal采用了“空间换时间”的方式。ThreadLocal会为每一个线程提供一个独立的变量副本，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本，从而也就没有必要对该变量进行同步了。ThreadLocal提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进ThreadLocal。</p>
+            </div>
             
-            <div class="terms-root">
-                
-                
-
-
-<div class="card-large">
-    <div class="card-large-img">
-
-        
-                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/default/default3.jpg" alt='图片加载失败'>
-        
-    </div>
-    <div class="card-large-content">
-        <div class="up-title"><a href="https://cuctut.github.io/posts/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B/">本博客的部署</a></div>
-        <div class="up-date">
-            <span class="no-wrap"><i class="fa fa-calendar"></i> 发布于: 2022-4-21 &nbsp;</span>
-            <span class="no-wrap"><i class="fa fa-calendar-check-o"></i> 更新于: 2023-3-28 &nbsp;</span>
-            <span class="no-wrap"><i class="fa fa-folder"></i>
-                
-                    收录于:
+                <div class="tags">
                     
-                        <a href='
-                                        /categories/web
+                    <span class="down-type-item">
+                        <div class="type-text">
+                            <a href='
+                                        /tags/java-spring
                                     '>
-                                web
+                                <i class="fa fa-tag"></i> Java Spring
                             </a>
-                
-            </span>
+                        </div>
+                    </span>
+                    
+                </div>
+            
         </div>
-        <div class="down-summary"></div>
-    </div>
-    <div class="card-readmore">
-        <a href="https://cuctut.github.io/posts/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B/">
-            <span><i class="fa fa-arrow-right"></i></span>
+        
+            
+                <div class="pre-next">
+                    
+    
+        
+        <a href="https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/" class="pre pre-last" style="text-align: center;">
+            <span class="pre-icon"><i class="fa fa-hand-o-left"></i></span>
+            <div class="pre-title-root">
+                <span>BeanFactory和ApplicationContext</span>
+            </div>
         </a>
-    </div>
+        
+    
+    
+
+                </div>
+            
+        
+    
 </div>
 
-
-
-
-<div class="dang"></div>
-            </div>
+    
+        <div class="content-last">
+            
+                <button class="aixin content-last-item efct-button">
+                    <i class="fa fa-heart"></i>
+                </button>
+            
             
         </div>
     
-</div>
 
 
             </div>
@@ -362,33 +486,16 @@
 
 
 
+    
+    
+
 
 <div class="other">
     <div class="other-up">
-        <div class="other-qita text-wbd">最新文章</div>
+        <div class="other-qita text-wbd">相关文章</div>
         <div class="xian"></div>
     </div>
     <div class="list">
-        
-            <a href="https://cuctut.github.io/posts/bean%E6%A6%82%E5%BF%B5/">
-                
-<a href="https://cuctut.github.io/posts/bean%E6%A6%82%E5%BF%B5/">
-    <div class="list-item">
-        <div class="icon-other-root">
-            
-                <div class="icon-other" style="background-image: url( https://images.unsplash.com/photo-1586685983913-5b3003fef6b3?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80 );"></div>
-            
-        </div>
-        <div class="list-right">
-            <div class="other-title">
-                Bean概念
-            </div>
-            <div class="other-summary"></div>
-            <div class="other-date">2022-5-22</div>
-        </div>
-    </div>
-</a>
-            </a>
         
             <a href="https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/">
                 
@@ -461,6 +568,46 @@
 
             </div>
         </div>
+    </div>
+</div>
+
+    
+
+<div class="sponsor">
+    <div class="sponsor-self">
+        <div class="sponsor-title">赞赏</div>
+        <div class="sponsor-btn">
+            
+                
+                    
+                        <div class="sponsor-btn-1 border-r">Wechat</div>
+                    
+                
+                
+            
+                
+                    
+                        <div class="sponsor-btn-2 border-l">Alipay</div>
+                    
+                
+                
+            
+        </div>
+        
+        <div class="sponsor-img">
+            
+                
+                    <img class="sponsor-img-1" src="/images/sponsor/wechat.jpeg" alt="">
+                
+                
+            
+                
+                    <img class="sponsor-img-2" src="/images/sponsor/alipay.jpeg" alt="" style="display: none;">
+                
+                
+            
+        </div>
+        <div class="cancel efct-button">取消</div>
     </div>
 </div>
 
