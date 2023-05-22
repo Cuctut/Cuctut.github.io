@@ -8,8 +8,8 @@
     <loc>https://cuctut.github.io/</loc>
     <lastmod>2023-05-21T21:38:43+08:00</lastmod>
   </url><url>
-    <loc>https://cuctut.github.io/posts/bean%E6%A6%82%E5%BF%B5/</loc>
-    <lastmod>2022-05-22T00:00:00+00:00</lastmod>
+    <loc>https://cuctut.github.io/posts/aop%E6%A6%82%E5%BF%B5/</loc>
+    <lastmod>2022-10-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cuctut.github.io/categories/</loc>
     <lastmod>2023-05-21T00:00:00+00:00</lastmod>
@@ -31,6 +31,9 @@
   </url><url>
     <loc>https://cuctut.github.io/tags/</loc>
     <lastmod>2023-05-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://cuctut.github.io/posts/bean%E6%A6%82%E5%BF%B5/</loc>
+    <lastmod>2022-05-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/</loc>
     <lastmod>2023-05-21T00:00:00+00:00</lastmod>
