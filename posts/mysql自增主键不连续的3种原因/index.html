@@ -3,18 +3,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Cuctut&#39;s blog | Posts</title>
+    <title>Cuctut&#39;s blog | MySQL自增主键不连续的3种原因</title>
     <meta name="description" content=" ">
-    <link rel="canonical" href="https://cuctut.github.io/posts/" />
+    <link rel="canonical" href="https://cuctut.github.io/posts/mysql%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%843%E7%A7%8D%E5%8E%9F%E5%9B%A0/" />
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <meta property="og:title" content="Posts" />
+    <meta property="og:title" content="MySQL自增主键不连续的3种原因" />
 <meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://cuctut.github.io/posts/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cuctut.github.io/posts/mysql%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%843%E7%A7%8D%E5%8E%9F%E5%9B%A0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-23T22:04:34+08:00" />
+<meta property="article:modified_time" content="2023-05-23T22:04:34+08:00" />
+
 
 
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Posts"/>
+<meta name="twitter:title" content="MySQL自增主键不连续的3种原因"/>
 <meta name="twitter:description" content=""/>
 
     
@@ -204,24 +207,35 @@
 
 
 
-    
-        
-        
-        
-    
-
-
 
 
     <div class="hero">
         
             <div class="hero-img">
-                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/top.jpg" alt="">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/default/default3.jpg" alt="">
             </div>
         
         <div class="hero-content">
-            <div class="hero-title">所有文章</div>
-            <div>description of allPosts page</div>
+            <div class="hero-title">MySQL自增主键不连续的3种原因</div>
+            <div class="hero-subtitle"></div>
+            <div class="hero-date">
+                    <span class="no-wrap"><i class="fa fa-calendar"></i> 发布于: 2023-5-23 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-calendar-check-o"></i> 更新于: 2023-5-23 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-folder"></i>
+                        收录于:
+                        
+                            <a href='
+                                /categories/mysql
+                            '>
+                                MySQL
+                            </a>
+                    </span>    
+            </div>
+            <div class="timelong">
+                <span class="no-wrap"><i class="fa fa-pencil"></i> 文章字数: 3460 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-clock-o"></i> 阅读时间: 7 分钟 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-eye"></i> 阅读量: <span id="busuanzi_value_page_pv"></span></span>
+            </div>
         </div>
     </div>
 
@@ -232,101 +246,376 @@
     <div class="container">
         <div class="zhuti">
             <div class="zhuti-l">
-                <div class="year-body">
-                    <div class="long">
-                        <button class="tosides-1 text-wbd" type="button">
-                            <i class="fa fa-arrow-right"></i>
-                        </button>
-                        <button class="tosides-2 text-wbd" type="button">
-                            <i class="fa fa-arrow-left"></i>
-                        </button>
-                        <button class="toup text-wbd">
-                            <i class="fa fa-arrow-up"></i>
-                        </button>
-                    </div>
-                    <div>
-                        <div class="year-row">
+                
+
+
+
+
     
-    <div class="year">
-        <h3 class="year-head">2023</h3>
-        <div class="year-items">
-            
-            <a href="/posts/mysql%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%843%E7%A7%8D%E5%8E%9F%E5%9B%A0/">
-                <div class="year-item">
-                    <div class="dot"></div>
-                    <div class="item-title">MySQL自增主键不连续的3种原因</div>
-                    <div class="connect-line"></div>
-                    <div class="item-date">05-23</div>
-                </div>
-            </a>
-            
-            <a href="/posts/spring%E4%BA%8B%E5%8A%A1/">
-                <div class="year-item">
-                    <div class="dot"></div>
-                    <div class="item-title">Spring事务</div>
-                    <div class="connect-line"></div>
-                    <div class="item-date">05-23</div>
-                </div>
-            </a>
-            
-        </div>
+
+
+<div class="content-root">
+    <div class="long">
+        <button class="tosides-1 text-wbd">
+            <i class="fa fa-arrow-right"></i>
+        </button>
+        <button class="tosides-2 text-wbd">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <button class="toup text-wbd">
+            <i class="fa fa-arrow-up"></i>
+        </button>
     </div>
     
-    <div class="year">
-        <h3 class="year-head">2022</h3>
-        <div class="year-items">
+        <div class="content">
+            <div class="content-self">
+                <h1 id="前言">前言</h1>
+<p>自增主键的特点是当表中每新增一条记录时，主键值会根据自增步长自动叠加，通常会将自增步长设置1，也就是说自增主键值是连续的。那么MySQL自增主键值一定会连续吗？今天这篇文章就来说说这个问题，看看什么情况下自增主键会出现不连续?</p>
+<h1 id="实验">实验</h1>
+<h2 id="数据准备">数据准备</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">drop</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">increnment_test</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-- 创建包含白增主键的表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">increnment_test</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">col1</span><span class="w"> </span><span class="nb">INT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">col2</span><span class="w"> </span><span class="nb">INT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">col3</span><span class="w"> </span><span class="nb">INT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">col1</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8mb4</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="唯一键冲突">唯一键冲突</h2>
+<p>比如<code>increnment_test</code>表中已经存在了<code>col1</code>为 3 的记录，我们继续插入<code>col1</code>为 3 的记录，此时会出现唯一键冲突插入报错，但是没有将自增值再改回去。重新插入<code>col1</code>为 4 的值，此时对应的<code>id</code>为 5;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">increnmont_test</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">increnment</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="p">(</span><span class="n">coll</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">,</span><span class="w"> </span><span class="n">col3</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">increnment_test</span><span class="w"> </span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">co12</span><span class="p">,</span><span class="w"> </span><span class="n">col3</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果：理想下应该<code>id</code>为4，现实是5</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">id</th>
+<th style="text-align:center">col1</th>
+<th style="text-align:center">col2</th>
+<th style="text-align:center">col3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">4</td>
+</tr>
+</tbody>
+</table>
+<p>原因：InnoDB引擎的自增值修改流程</p>
+<ul>
+<li>执行器调用InnoDB引擎接口将分析器优化后的SQL传入,并将值(3,3,3)一起传过去</li>
+<li><strong>InnoDB发现用户没有指定自增id列,会先获取表increnment_test当前的自增值3</strong></li>
+<li>将ID列补充完整,并且将自增值填入(3,3,3,3)</li>
+<li><strong>然后将表的自增值改成4</strong></li>
+<li>继续执行插入数据操作;</li>
+<li><strong>唯一键冲突，插入失败，但自增值还是4，不回退</strong></li>
+<li>继续插入(4,4,4)，重复上面流程，使用4+1=5作为自增值</li>
+</ul>
+<blockquote>
+<p>tip
+自增字段值的生成是由存储引擎自动完成的,而不是由优化器完成的。因此,在执行SQL语句时,即使未指定自增字段列,也不会对性能产生任何影响。</p>
+</blockquote>
+<h2 id="事务回滚">事务回滚</h2>
+<p>开启一个<strong>事务</strong>插入<code>col1</code>为 6 的数据，然后进行回滚。回滚后重新插入<code>col1</code>为 6 的记录，此时<code>col1</code>为 6 的<code>id</code>值为 7</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">increnment_test</span><span class="w"> </span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">,</span><span class="w"> </span><span class="n">col3</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ROLLBACK</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">increnment_test</span><span class="w"> </span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">,</span><span class="w"> </span><span class="n">col3</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">COMMIT</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果：理想下应该<code>id</code>为6，现实是7</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">id</th>
+<th style="text-align:center">col1</th>
+<th style="text-align:center">col2</th>
+<th style="text-align:center">col3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+</tr>
+</tbody>
+</table>
+<p>原因和唯一键冲突一致，都是自增值没有回退导致。</p>
+<h2 id="批量插入数据">批量插入数据</h2>
+<p>创建一个和<code>increnment_test</code>相同结构的表<code>increnment_test2</code>，将前者的内容全部插入到后者，再插入一条数据，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">drop</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">increnment_test2</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">increnment_test2</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="n">increnment_test</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">increnment_test2</span><span class="w"> </span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">,</span><span class="w"> </span><span class="n">col3</span><span class="p">)</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">,</span><span class="w"> </span><span class="n">col3</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">increnment_test</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">increnment_test2</span><span class="w"> </span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">,</span><span class="w"> </span><span class="n">col3</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">increnment_test2</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果：理想下应该<code>id</code>为6，现实是8<br>
+（前面1~5的<code>id</code>是新表<code>increnment_test2</code>自增分配的，不复制<code>increnment_test</code>的）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">id</th>
+<th style="text-align:center">col1</th>
+<th style="text-align:center">col2</th>
+<th style="text-align:center">col3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">8</td>
+</tr>
+</tbody>
+</table>
+<p>原因：</p>
+<p>对于批量插入数据的语句，如：insert … select、replace … select 和 load data 语句，这时<strong>不确定要插入多少条数据</strong>，所以无法一次性准确地申请对应个数的id，此时 MySQL 有一个<strong>批量申请自增 id 的策略</strong>：</p>
+<ul>
+<li>SQL语句执行过程中,第1次申请自增id,会分配1个;</li>
+<li>1个用完以后，第2次申请自增id，会分配2个；</li>
+<li>2个用完以后，第3次申请自增 id，会分配4个；</li>
+</ul>
+<p>依此类推，<strong>同一个语句去申请自增 id，每次申请到的自增id个数都是上一次的两倍。</strong></p>
+<p>对于此例，第一次分配的是1，第二次分配的是2、3，第三次是4、5、6、7，在插入(8, 8, 8)前，自增id只用到5，而6、7已经分配出去，继续插入单条，自增后直接分配到8，所以会从8开始（不会分配8~15，因为不是批量插入）</p>
+<blockquote>
+<p>tip
+通过insert into table(col1,col2) values(a,b),(b,c)&hellip;这种一次插入多条数据时除外，因为这种方式插入多条数据时，申<strong>请id的个数是可以准确计算的</strong>。</p>
+</blockquote>
+<h1 id="扩展">扩展</h1>
+<p>摘自<a href="https://www.modb.pro/db/131854">https://www.modb.pro/db/131854</a>，里面的扩展部分关于<strong>自增值的修改策略</strong>虽不重要，但也很受益。</p>
+<h2 id="自增值的保存位置">自增值的保存位置</h2>
+<p>我们可以通过 <code>show create table table_name</code> 命令查看某个表当前的 <code>AUTO_IINCREMENT</code> 值，那么是不是这个自增值和表结构定义保存在一起？其实并不是，<strong>表结构定义保存在后缀为.frm的文件中，而自增值并不在</strong>。</p>
+<ul>
+<li>
+<p>MyISAM 引擎的自增值保存在数据文件中。</p>
+</li>
+<li>
+<p>InnoDB 引擎的自增值，在 <code>MySQL 5.7</code> 及之前的版本是保存在了内存里，并且到了 <code>MySQL 8.0</code> 版本后，才有了“自增值持久化”的能力，也就是才实现了“如果发生重启，表的自增值可以恢复为 MySQL 重启前的值”，具体情况是：</p>
+<ul>
+<li>
+<p>在 <code>MySQL 5.7</code> 及之前的版本，自增值保存在内存里，并没有持久化。每次重启后，第一次打开表的时候，都会去找自增值的最大值 max(id)，然后将 max(id)+1 作为这个表当前的自增值。举例来说，如果一个表当前数据行里最大的 id 是 10，AUTO_INCREMENT=11。这时候，我们删除 id=10 的行，AUTO_INCREMENT 还是 11。但如果马上重启实例，重启后这个表的 AUTO_INCREMENT 就会变成 10。也就是说，<strong>MySQL 重启可能会修改一个表的 AUTO_INCREMENT 的值</strong>。</p>
+</li>
+<li>
+<p>在 <code>MySQL 8.0</code> 版本，将自增值的变更记录在了 <code>redo log</code> 中，重启的时候依靠 <code>redo log</code> 恢复重启之前的值。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="为什么不在插入数据失败时将自增值改回去">为什么不在插入数据失败时将自增值改回去？</h2>
+<p>假设有两个并行执行的事务，在申请自增值的时候，为了避免两个事务申请到相同的自增 id，肯定要加锁，然后顺序申请。</p>
+<ul>
+<li>事务 A 申请到了 id=2， 事务 B 申请到 id=3，那么这时候表 t 的自增值是 4，之后继续执行。</li>
+<li>事务 B 正确提交了，但事务 A 出现了唯一键冲突。</li>
+<li>如果允许事务 A 把自增 id 回退，也就是把表 t 的当前自增值改回 2，那么就会出现这样的情况：表里面已经有 id=3 的行，而当前的自增 id 值是 2。</li>
+<li>接下来，继续执行的其他事务就会申请到 id=2，然后再申请到 id=3。这时，就会出现插入语句报错“主键冲突”。</li>
+</ul>
+<p>而为了解决这个主键冲突，有两种方法：</p>
+<ul>
+<li>每次申请 id 之前，先判断表里面是否已经存在这个 id。如果存在，就跳过这个 id。但是，这个方法的成本很高。因为，本来申请 id 是一个很快的操作，现在还要再去主键索引树上判断 id 是否存在。</li>
+<li>把自增 id 的锁范围扩大，必须等到一个事务执行完成并提交，下一个事务才能再申请自增 id。这个方法的问题，就是锁的粒度太大，系统并发能力大大下降。</li>
+</ul>
+<p>可见，这两个方法都会导致性能问题。造成这些麻烦的罪魁祸首，就是我们假设的这个“允许自增 id 回退”的前提导致的。</p>
+<p>因此，InnoDB 放弃了这个设计，语句执行失败也不回退自增 id。也正是因为这样，所以才只保证了自增 id 是递增的，但不保证是连续的。</p>
+<h2 id="自增锁">自增锁</h2>
+<p>MySQL里面有一种锁叫自增锁，是在申请自增主键值的时候填加的锁，但这种锁并不是事务锁，在 MySQL 5.0 版本的时候，自增锁的范围是语句级别。也就是说，如果一个语句申请了一个表自增锁，这个锁会等语句执行结束以后才释放。</p>
+<p>显然，这样设计会影响并发度。MySQL 5.1.22 版本引入了一个新策略，新增参数 innodb_autoinc_lock_mode，默认值是 1。(8.x版本这个参数的默认值已经改为了2)</p>
+<ul>
+<li>这个参数的值被设置为 0 时，表示采用之前 MySQL 5.0 版本的策略，即语句执行结束后才释放锁；</li>
+<li>这个参数的值被设置为 1 时：普通 insert 语句，自增锁在申请之后就马上释放；类似 insert … select 这样的批量插入数据的语句，自增锁还是要等语句结束后才被释放；</li>
+<li>这个参数的值被设置为 2 时，所有的申请自增主键的动作都是申请后就释放锁。</li>
+</ul>
+<h2 id="为什么5122引入innodb_autoinc_lock_mode参数时默认值为1而80将默认值设改成了2">为什么5.1.22引入innodb_autoinc_lock_mode参数时默认值为1，而8.0将默认值设改成了2</h2>
+<p>来自ChatGPT：</p>
+<p>在MySQL数据库中，<code>innodb_autoinc_lock_mode</code>参数用于控制InnoDB存储引擎中自增列（auto-increment column）的锁定方式。</p>
+<p>在版本5.1.22中引入<code>innodb_autoinc_lock_mode</code>参数时，其默认值被设置为1。这意味着在插入新行时，InnoDB将使用传统的表级锁（table-level lock）来锁定整个表，以确保自增列的唯一性。这种锁定方式可以有效地保证自增列的唯一性，但在并发插入时可能会导致性能瓶颈，因为每次插入操作都需要锁定整个表。</p>
+<p>然而，在MySQL 8.0版本中，<code>innodb_autoinc_lock_mode</code>参数的默认值被改为2。这意味着InnoDB现在使用更为灵活的行级锁（row-level lock）来锁定自增列。使用行级锁可以更好地支持并发插入操作，因为不同的插入操作可以同时进行，而不需要等待对整个表的锁定。</p>
+<p>通过将<code>innodb_autoinc_lock_mode</code>参数的默认值从1更改为2，MySQL 8.0提供了更好的并发性能，尤其在高并发的写入负载下。但需要注意的是，这可能会导致一些特殊情况下的自增列值不连续（例如，回滚的事务可能导致自增值未被使用），因此在特定应用场景中可能需要进行适当的调整。</p>
+<p>总结而言，MySQL 8.0将<code>innodb_autoinc_lock_mode</code>参数的默认值改为2是为了提高并发插入的性能，但也需要根据具体情况进行评估和调整。</p>
+            </div>
             
-            <a href="/posts/aop%E6%A6%82%E5%BF%B5/">
-                <div class="year-item">
-                    <div class="dot"></div>
-                    <div class="item-title">AOP概念</div>
-                    <div class="connect-line"></div>
-                    <div class="item-date">05-22</div>
+                <div class="tags">
+                    
+                    <span class="down-type-item">
+                        <div class="type-text">
+                            <a href='
+                                        /tags/mysql
+                                    '>
+                                <i class="fa fa-tag"></i> MySQL
+                            </a>
+                        </div>
+                    </span>
+                    
                 </div>
-            </a>
-            
-            <a href="/posts/bean%E6%A6%82%E5%BF%B5/">
-                <div class="year-item">
-                    <div class="dot"></div>
-                    <div class="item-title">Bean概念</div>
-                    <div class="connect-line"></div>
-                    <div class="item-date">05-22</div>
-                </div>
-            </a>
-            
-            <a href="/posts/beanfactory%E5%92%8Capplicationcontext/">
-                <div class="year-item">
-                    <div class="dot"></div>
-                    <div class="item-title">BeanFactory和ApplicationContext</div>
-                    <div class="connect-line"></div>
-                    <div class="item-date">05-21</div>
-                </div>
-            </a>
-            
-            <a href="/posts/spring%E6%A6%82%E5%BF%B5%E7%AF%87/">
-                <div class="year-item">
-                    <div class="dot"></div>
-                    <div class="item-title">Spring概念篇</div>
-                    <div class="connect-line"></div>
-                    <div class="item-date">05-21</div>
-                </div>
-            </a>
-            
-            <a href="/posts/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B/">
-                <div class="year-item">
-                    <div class="dot"></div>
-                    <div class="item-title">本博客的部署</div>
-                    <div class="connect-line"></div>
-                    <div class="item-date">04-21</div>
-                </div>
-            </a>
             
         </div>
-    </div>
+        
+            
+                <div class="pre-next">
+                    
+    
+        
+        <a href="https://cuctut.github.io/posts/spring%E4%BA%8B%E5%8A%A1/" class="pre pre-last" style="text-align: center;">
+            <span class="pre-icon"><i class="fa fa-hand-o-left"></i></span>
+            <div class="pre-title-root">
+                <span>Spring事务</span>
+            </div>
+        </a>
+        
+    
+    
+
+                </div>
+            
+        
     
 </div>
-                    </div>
-                </div>
+
+    
+        <div class="content-last">
+            
+                <button class="aixin content-last-item efct-button">
+                    <i class="fa fa-heart"></i>
+                </button>
+            
+            
+        </div>
+    
+
+
             </div>
             <div class="zhuti-r">
                 
@@ -401,33 +690,16 @@
 
 
 
+    
+    
+
 
 <div class="other">
     <div class="other-up">
-        <div class="other-qita text-wbd">最新文章</div>
+        <div class="other-qita text-wbd">相关文章</div>
         <div class="xian"></div>
     </div>
     <div class="list">
-        
-            <a href="https://cuctut.github.io/posts/mysql%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%843%E7%A7%8D%E5%8E%9F%E5%9B%A0/">
-                
-<a href="https://cuctut.github.io/posts/mysql%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%843%E7%A7%8D%E5%8E%9F%E5%9B%A0/">
-    <div class="list-item">
-        <div class="icon-other-root">
-            
-                <div class="icon-other" style="background-image: url( /images/default/default3.jpg );"></div>
-            
-        </div>
-        <div class="list-right">
-            <div class="other-title">
-                MySQL自增主键不连续的3种原因
-            </div>
-            <div class="other-summary"></div>
-            <div class="other-date">2023-5-23</div>
-        </div>
-    </div>
-</a>
-            </a>
         
             <a href="https://cuctut.github.io/posts/spring%E4%BA%8B%E5%8A%A1/">
                 
@@ -449,66 +721,6 @@
 </a>
             </a>
         
-            <a href="https://cuctut.github.io/posts/aop%E6%A6%82%E5%BF%B5/">
-                
-<a href="https://cuctut.github.io/posts/aop%E6%A6%82%E5%BF%B5/">
-    <div class="list-item">
-        <div class="icon-other-root">
-            
-                <div class="icon-other" style="background-image: url( https://pic3.zhimg.com/v2-d7f3d00e1ae3d13a950ca9b81d2c3f22_r.jpg );"></div>
-            
-        </div>
-        <div class="list-right">
-            <div class="other-title">
-                AOP概念
-            </div>
-            <div class="other-summary"></div>
-            <div class="other-date">2022-5-22</div>
-        </div>
-    </div>
-</a>
-            </a>
-        
-            <a href="https://cuctut.github.io/posts/bean%E6%A6%82%E5%BF%B5/">
-                
-<a href="https://cuctut.github.io/posts/bean%E6%A6%82%E5%BF%B5/">
-    <div class="list-item">
-        <div class="icon-other-root">
-            
-                <div class="icon-other" style="background-image: url( https://images.unsplash.com/photo-1586685983913-5b3003fef6b3?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80 );"></div>
-            
-        </div>
-        <div class="list-right">
-            <div class="other-title">
-                Bean概念
-            </div>
-            <div class="other-summary"></div>
-            <div class="other-date">2022-5-22</div>
-        </div>
-    </div>
-</a>
-            </a>
-        
-            <a href="https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/">
-                
-<a href="https://cuctut.github.io/posts/beanfactory%E5%92%8Capplicationcontext/">
-    <div class="list-item">
-        <div class="icon-other-root">
-            
-                <div class="icon-other" style="background-image: url( /images/default/default3.jpg );"></div>
-            
-        </div>
-        <div class="list-right">
-            <div class="other-title">
-                BeanFactory和ApplicationContext
-            </div>
-            <div class="other-summary"></div>
-            <div class="other-date">2022-5-21</div>
-        </div>
-    </div>
-</a>
-            </a>
-        
     </div>
 </div>
         </div>
@@ -522,6 +734,47 @@
         </div>
     </div>
 </div>
+
+    
+
+<div class="sponsor">
+    <div class="sponsor-self">
+        <div class="sponsor-title">赞赏</div>
+        <div class="sponsor-btn">
+            
+                
+                    
+                        <div class="sponsor-btn-1 border-r">Wechat</div>
+                    
+                
+                
+            
+                
+                    
+                        <div class="sponsor-btn-2 border-l">Alipay</div>
+                    
+                
+                
+            
+        </div>
+        
+        <div class="sponsor-img">
+            
+                
+                    <img class="sponsor-img-1" src="/images/sponsor/wechat.jpeg" alt="">
+                
+                
+            
+                
+                    <img class="sponsor-img-2" src="/images/sponsor/alipay.jpeg" alt="" style="display: none;">
+                
+                
+            
+        </div>
+        <div class="cancel efct-button">取消</div>
+    </div>
+</div>
+
 
         </div>
 

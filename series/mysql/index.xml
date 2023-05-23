@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MySQL on Cuctut&#39;s blog</title>
+    <link>https://cuctut.github.io/series/mysql/</link>
+    <description>Recent content in MySQL on Cuctut&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 23 May 2023 22:04:34 +0800</lastBuildDate><atom:link href="https://cuctut.github.io/series/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL自增主键不连续的3种原因</title>
+      <link>https://cuctut.github.io/posts/mysql%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%843%E7%A7%8D%E5%8E%9F%E5%9B%A0/</link>
+      <pubDate>Tue, 23 May 2023 22:04:34 +0800</pubDate>
+      
+      <guid>https://cuctut.github.io/posts/mysql%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%843%E7%A7%8D%E5%8E%9F%E5%9B%A0/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

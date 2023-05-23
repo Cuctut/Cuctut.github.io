@@ -6,7 +6,16 @@
     <description>Recent content in Categories on Cuctut&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 23 May 2023 14:03:25 +0800</lastBuildDate><atom:link href="https://cuctut.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 May 2023 22:04:34 +0800</lastBuildDate><atom:link href="https://cuctut.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL</title>
+      <link>https://cuctut.github.io/categories/mysql/</link>
+      <pubDate>Tue, 23 May 2023 22:04:34 +0800</pubDate>
+      
+      <guid>https://cuctut.github.io/categories/mysql/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Java Spring</title>
       <link>https://cuctut.github.io/categories/java-spring/</link>
