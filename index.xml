@@ -6,7 +6,16 @@
     <description>Recent content on Cuctut&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 21 May 2023 21:38:43 +0800</lastBuildDate><atom:link href="https://cuctut.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 May 2023 14:03:25 +0800</lastBuildDate><atom:link href="https://cuctut.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spring事务</title>
+      <link>https://cuctut.github.io/posts/spring%E4%BA%8B%E5%8A%A1/</link>
+      <pubDate>Tue, 23 May 2023 14:03:25 +0800</pubDate>
+      
+      <guid>https://cuctut.github.io/posts/spring%E4%BA%8B%E5%8A%A1/</guid>
+      <description>什么是事务？ 事务是逻辑上的一组操作，要么都执行，要么都不执行。 我们系统的每个业务方法可能包括了多个原</description>
+    </item>
+    
     <item>
       <title>AOP概念</title>
       <link>https://cuctut.github.io/posts/aop%E6%A6%82%E5%BF%B5/</link>
