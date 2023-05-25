@@ -3,18 +3,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Cuctut&#39;s blog | 404 Page not found</title>
+    <title>Cuctut&#39;s blog | 数据库基础</title>
     <meta name="description" content=" ">
-    <link rel="canonical" href="https://cuctut.github.io/404.html" />
+    <link rel="canonical" href="https://cuctut.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/" />
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <meta property="og:title" content="404 Page not found" />
+    <meta property="og:title" content="数据库基础" />
 <meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://cuctut.github.io/404.html" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cuctut.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-25T15:14:30+08:00" />
+<meta property="article:modified_time" content="2023-05-25T15:14:30+08:00" />
+
+<meta property="og:see_also" content="https://cuctut.github.io/posts/mysql%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%843%E7%A7%8D%E5%8E%9F%E5%9B%A0/" />
 
 
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="404 Page not found"/>
+<meta name="twitter:title" content="数据库基础"/>
 <meta name="twitter:description" content=""/>
 
     
@@ -36,8 +40,6 @@
     
     <link rel="stylesheet" href='/css/_custom.css' />
     <style>
-        
-            body::after { display: none; }
          
     </style>
     
@@ -64,31 +66,593 @@
             </div>
         </div>
 
+        <header>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/">
+                <span class="logo">Cuctut&#39;s blog</span>
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+                <a href="/portfolio">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-spin fa-star'></i> 作品集</div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-home'></i> 主页</div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/posts">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-book'></i> 文章</div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/categories">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-folder-open'></i> 分类</div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/series">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-gears'></i> 系列</div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/tags">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-tags'></i> 标签</div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/about">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-info-circle'></i> 关于</div>
+                        </div>
+                    </div>
+                </a>
+            
+            <div class="navbar-burger">
+                <div class="burger-btn"><span><i class="fa fa-navicon"></i></span></div>
+            </div>
+            
+            
+            <div class="search-in"><span><i class="fa fa-search"></i></span></div>
+            
+                <div class="mode">
+                    <span class="sun"><i class="fa fa-sun-o"></i></span>
+                    <span class="moon"><i class="fa fa-moon-o"></i></span>
+                </div>
+            
+        </div>
+    </nav>
+    <div class="burger-items">
         
+        <a href="/portfolio">
+            <div class="burger-item">
+                <i class='fa fa-spin fa-star'></i> 作品集
+            </div>
+        </a>
+        
+        <a href="/">
+            <div class="burger-item">
+                <i class='fa fa-home'></i> 主页
+            </div>
+        </a>
+        
+        <a href="/posts">
+            <div class="burger-item">
+                <i class='fa fa-book'></i> 文章
+            </div>
+        </a>
+        
+        <a href="/categories">
+            <div class="burger-item">
+                <i class='fa fa-folder-open'></i> 分类
+            </div>
+        </a>
+        
+        <a href="/series">
+            <div class="burger-item">
+                <i class='fa fa-gears'></i> 系列
+            </div>
+        </a>
+        
+        <a href="/tags">
+            <div class="burger-item">
+                <i class='fa fa-tags'></i> 标签
+            </div>
+        </a>
+        
+        <a href="/about">
+            <div class="burger-item">
+                <i class='fa fa-info-circle'></i> 关于
+            </div>
+        </a>
+        
+    </div>
+    <div class="header-rest"></div>
+</header>
+
 
         <div id="content">
 
-    <main>
-        <div class="circle-404">
-            <div class="root-404">
-                <div class="c404"></div>
-                <div class="titleroot-404">
-                    <div class="title-404">4</div>
-                    <div class="title-404">4</div>
-                </div>
-            </div>
-        <div class="back">
-            <div>抱歉，页面好像走丢了...</div>
-            <a href='
-                        /
-                    ' class="efct-button">回到主页</a>
-        </div>
-        </div>
-    </main>
 
+
+
+
+
+
+
+    <div class="hero">
+        
+            <div class="hero-img">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="https://images.unsplash.com/photo-1543722615-dbf5edf1a00d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1476&amp;q=80" alt="">
+            </div>
+        
+        <div class="hero-content">
+            <div class="hero-title">数据库基础</div>
+            <div class="hero-subtitle"></div>
+            <div class="hero-date">
+                    <span class="no-wrap"><i class="fa fa-calendar"></i> 发布于: 2023-5-25 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-calendar-check-o"></i> 更新于: 2023-5-25 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-folder"></i>
+                        收录于:
+                        
+                            <a href='
+                                /categories/database
+                            '>
+                                DataBase
+                            </a>, 
+                            <a href='
+                                /categories/mysql
+                            '>
+                                MySQL
+                            </a>
+                    </span>    
+            </div>
+            <div class="timelong">
+                <span class="no-wrap"><i class="fa fa-pencil"></i> 文章字数: 1967 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-clock-o"></i> 阅读时间: 4 分钟 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-eye"></i> 阅读量: <span id="busuanzi_value_page_pv"></span></span>
+            </div>
         </div>
+    </div>
+
+
+
+
+<div class="zhuti-0">
+    <div class="container">
+        <div class="zhuti">
+            <div class="zhuti-l">
+                
+
+
+
+
+    
+
+
+<div class="content-root">
+    <div class="long">
+        <button class="tosides-1 text-wbd">
+            <i class="fa fa-arrow-right"></i>
+        </button>
+        <button class="tosides-2 text-wbd">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <button class="toup text-wbd">
+            <i class="fa fa-arrow-up"></i>
+        </button>
+    </div>
+    
+        <div class="content">
+            <div class="content-self">
+                <h1 id="数据库基础知识总结">数据库基础知识总结</h1>
+<h2 id="链接">链接</h2>
+<p>包括数据库、数据库管理系统、数据库系统、数据库管理员、元组、各种码、范式的概念。<br>
+-&gt; <a href="https://javaguide.cn/database/basis.html">数据库基础</a></p>
+<h2 id="为什么不推荐使用外键与级联">为什么不推荐使用外键与级联？</h2>
+<p>对于外键和级联，阿里巴巴开发手册这样说到：</p>
+<blockquote>
+<p>【强制】不得使用外键与级联，一切外键概念必须在应用层解决。</p>
+<p>说明: 以学生和成绩的关系为例，学生表中的 student_id 是主键，那么成绩表中的 student_id 则为外键。如果更新学生表中的 student_id，同时触发成绩表中的 student_id 更新，即为级联更新。外键与级联更新适用于单机低并发，不适合分布式、高并发集群; 级联更新是强阻塞，存在数据库更新风暴的风 险; 外键影响数据库的插入速度</p>
+</blockquote>
+<p>为什么不要用外键呢？大部分人可能会这样回答：</p>
+<ol>
+<li><strong>增加了复杂性：</strong> a. 每次做 DELETE 或者 UPDATE 都必须考虑外键约束，会导致开发的时候很痛苦, 测试数据极为不方便; b. 外键的主从关系是定的，假如那天需求有变化，数据库中的这个字段根本不需要和其他表有关联的话就会增加很多麻烦。</li>
+<li><strong>增加了额外工作</strong>：数据库需要增加维护外键的工作，比如当我们做一些涉及外键字段的增，删，更新操作之后，需要触发相关操作去检查，保证数据的的一致性和正确性，这样会不得不消耗资源；（个人觉得这个不是不用外键的原因，因为即使你不使用外键，你在应用层面也还是要保证的。所以，我觉得这个影响可以忽略不计。）</li>
+<li><strong>对分库分表不友好</strong>：因为分库分表下外键是无法生效的。</li>
+<li>&hellip;&hellip;</li>
+</ol>
+<p>我个人觉得上面这种回答不是特别的全面，只是说了外键存在的一个常见的问题。实际上，我们知道外键也是有很多好处的，比如：</p>
+<ol>
+<li>保证了数据库数据的一致性和完整性；</li>
+<li>级联操作方便，减轻了程序代码量；</li>
+<li>&hellip;&hellip;</li>
+</ol>
+<p>所以说，不要一股脑的就抛弃了外键这个概念，既然它存在就有它存在的道理。</p>
+<p><strong>如果系统不涉及分库分表，并发量不是很高的情况还是可以考虑使用外键的</strong>。</p>
+<h2 id="什么是存储过程">什么是存储过程?</h2>
+<p>我们可以把存储过程看成是一些 SQL 语句的集合，中间加了点逻辑控制语句。存储过程在业务比较复杂的时候是非常实用的，比如很多时候我们完成一个操作可能需要写一大串 SQL 语句，这时候我们就可以写有一个存储过程，这样也方便了我们下一次的调用。存储过程一旦调试完成通过后就能稳定运行，另外，使用存储过程比单纯 SQL 语句执行要快，因为存储过程是预编译过的。</p>
+<p>存储过程在互联网公司应用不多，因为存储过程难以调试和扩展，而且没有移植性，还会消耗数据库资源。</p>
+<p>阿里巴巴 Java 开发手册里要求禁止使用存储过程。</p>
+<p><img src="/images/BanStoredProcedure.jpg" alt="阿里巴巴Java开发手册: 禁止存储过程"></p>
+<h2 id="dropdelete-与-truncate-区别">drop、delete 与 truncate 区别？</h2>
+<h3 id="用法不同">用法不同</h3>
+<ul>
+<li><code>drop</code>(丢弃数据): <code>drop table 表名</code> ，直接将表都删除掉，在删除表的时候使用。</li>
+<li><code>truncate</code> (清空数据) : <code>truncate table 表名</code> ，只删除表中的数据，再插入数据的时候自增长 id 又从 1 开始，在清空表中数据的时候使用。</li>
+<li><code>delete</code>（删除数据） : <code>delete from 表名 where 列名=值</code>，删除某一行的数据，如果不加 <code>where</code> 子句和<code>truncate table 表名</code>作用类似。</li>
+</ul>
+<p><code>truncate</code> 和不带 <code>where</code>子句的 <code>delete</code>、以及 <code>drop</code> 都会删除表内的数据，但是 <strong><code>truncate</code> 和 <code>delete</code> 只删除数据不删除表的结构(定义)，执行 <code>drop</code> 语句，此表的结构也会删除，也就是执行<code>drop</code> 之后对应的表不复存在。</strong></p>
+<h3 id="属于不同的数据库语言">属于不同的数据库语言</h3>
+<p><code>truncate</code> 和 <code>drop</code> 属于 DDL(数据定义语言)语句，操作立即生效，原数据不放到 rollback segment 中，不能回滚，操作不触发 trigger。而 <code>delete</code> 语句是 DML (数据库操作语言)语句，这个操作会放到 rollback segment 中，事务提交之后才生效。</p>
+<p><strong>DML 语句和 DDL 语句区别：</strong></p>
+<ul>
+<li>DML 是数据库操作语言（Data Manipulation Language）的缩写，是指对数据库中表记录的操作，主要包括表记录的插入、更新、删除和查询，是开发人员日常使用最频繁的操作。</li>
+<li>DDL （Data Definition Language）是数据定义语言的缩写，简单来说，就是对数据库内部的对象进行创建、删除、修改的操作语言。它和 DML 语言的最大区别是 DML 只是对表内部数据的操作，而不涉及到表的定义、结构的修改，更不会涉及到其他对象。DDL 语句更多的被数据库管理员（DBA）所使用，一般的开发人员很少使用。</li>
+</ul>
+<p>另外，由于<code>select</code>不会对表进行破坏，所以有的地方也会把<code>select</code>单独区分开叫做数据库查询语言 DQL（Data Query Language）。</p>
+<h3 id="执行速度不同">执行速度不同</h3>
+<p>一般来说：<code>drop</code> &gt; <code>truncate</code> &gt; <code>delete</code>（这个我没有设计测试过）。</p>
+<ul>
+<li><code>delete</code>命令执行的时候会产生数据库的<code>binlog</code>日志，而日志记录是需要消耗时间的，但是也有个好处方便数据回滚恢复。</li>
+<li><code>truncate</code>命令执行的时候不会产生数据库日志，因此比<code>delete</code>要快。除此之外，还会把表的自增值重置和索引恢复到初始大小等。</li>
+<li><code>drop</code>命令会把表占用的空间全部释放掉。</li>
+</ul>
+<p>Tips：你应该更多地关注在使用场景上，而不是执行效率。</p>
+<h1 id="nosql基础知识总结">NoSQL基础知识总结</h1>
+<p>NoSQL（Not Only SQL 的缩写）泛指非关系型的数据库，主要针对的是键值、文档以及图形类型数据存储。并且，NoSQL 数据库天生支持分布式，数据冗余和数据分片等特性，旨在提供可扩展的高可用高性能数据存储解决方案。</p>
+<p>-&gt;<a href="https://javaguide.cn/database/nosql.html">NoSQL基础</a></p>
+<h1 id="字符集详解">字符集详解</h1>
+<p>-&gt;<a href="https://javaguide.cn/database/character-set.html">字符集详解</a></p>
+            </div>
+            
+                <div class="tags">
+                    
+                    <span class="down-type-item">
+                        <div class="type-text">
+                            <a href='
+                                        /tags/database
+                                    '>
+                                <i class="fa fa-tag"></i> DataBase
+                            </a>
+                        </div>
+                    </span>
+                    
+                    <span class="down-type-item">
+                        <div class="type-text">
+                            <a href='
+                                        /tags/mysql
+                                    '>
+                                <i class="fa fa-tag"></i> MySQL
+                            </a>
+                        </div>
+                    </span>
+                    
+                </div>
+            
+        </div>
+        
+            
+                <div class="pre-next">
+                    
+    
+        
+        <a href="https://cuctut.github.io/posts/mysql%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%843%E7%A7%8D%E5%8E%9F%E5%9B%A0/" class="pre">
+            <span class="pre-icon"><i class="fa fa-hand-o-left"></i></span>
+            <div class="pre-title-root">
+                <span>MySQL自增主键不连续的3种原因</span>
+            </div>
+        </a>
+        
 
         
+        <a href="https://cuctut.github.io/posts/sql%E8%AF%AD%E6%B3%95/" class="next">
+            <div class="next-title-root">
+                <span>SQL语法</span>
+            </div>
+            <span class="next-icon"><i class="fa fa-hand-o-right"></i></span>
+        </a>
+        
+
+    
+    
+
+                </div>
+            
+        
+    
+</div>
+
+    
+        <div class="content-last">
+            
+                <button class="aixin content-last-item efct-button">
+                    <i class="fa fa-heart"></i>
+                </button>
+            
+            
+        </div>
+    
+
+
+            </div>
+            <div class="zhuti-r">
+                
+<div class="zhuti-r-0">
+    <div class="zhuti-r-1">
+        
+        <div id="r1">
+            
+
+<div class="about-zuozhe">
+    <div class="zuozhe">
+        
+            <div class="datou">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/author.png" alt="">
+            </div>
+        
+        <div class="name-jianjie">
+            <div class="name">Cuctut</div>
+            <div class="jianjie">
+                Be the change.
+            </div>
+        </div>
+    </div>
+
+    <div class="type">
+        <a href='
+                    /posts/
+                '>
+            <p>文章</p>
+            <p>9</p>
+        </a>
+        <a href='
+                    /categories/
+                '>
+            <p>分类</p>
+            <p>4</p>
+        </a>
+        <a href='
+                    /tags/
+                '>
+            <p>标签</p>
+            <p>3</p>
+        </a>
+    </div>
+
+    <a href="https://github.com/Cuctut">
+        <div class="follow">Follow Me</div>
+    </a>
+    <div class="link">
+        
+        <a href="https://github.com/Cuctut" class="link-item is-hidden-desktop" title="GitHub">
+            <span class="icon"><i class='fa fa-github'></i></span>
+        </a>
+        
+        <a href="https://space.bilibili.com/172938182" class="link-item is-hidden-desktop" title="BiliBili">
+            <span class="icon"><i class='fa fa-youtube'></i></span>
+        </a>
+        
+    </div>
+</div>
+            <div class="mulu">
+    <div class="dong"></div>
+    <div class="zhi">
+        <div class="wenzi">
+            <div class="zhi-mulu text-wbd">目录</div>
+            <div class="mulu-items">
+            </div>
+        </div>
+    </div>
+</div>
+            
+
+
+
+    
+    
+
+
+<div class="other">
+    <div class="other-up">
+        <div class="other-qita text-wbd">相关文章</div>
+        <div class="xian"></div>
+    </div>
+    <div class="list">
+        
+            <a href="https://cuctut.github.io/posts/mysql%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%843%E7%A7%8D%E5%8E%9F%E5%9B%A0/">
+                
+<a href="https://cuctut.github.io/posts/mysql%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%843%E7%A7%8D%E5%8E%9F%E5%9B%A0/">
+    <div class="list-item">
+        <div class="icon-other-root">
+            
+                <div class="icon-other" style="background-image: url( https://images.unsplash.com/photo-1543722615-dbf5edf1a00d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1476&amp;q=80 );"></div>
+            
+        </div>
+        <div class="list-right">
+            <div class="other-title">
+                MySQL自增主键不连续的3种原因
+            </div>
+            <div class="other-summary"></div>
+            <div class="other-date">2023-5-23</div>
+        </div>
+    </div>
+</a>
+            </a>
+        
+            <a href="https://cuctut.github.io/posts/sql%E8%AF%AD%E6%B3%95/">
+                
+<a href="https://cuctut.github.io/posts/sql%E8%AF%AD%E6%B3%95/">
+    <div class="list-item">
+        <div class="icon-other-root">
+            
+                <div class="icon-other" style="background-image: url( https://images.unsplash.com/photo-1543722615-dbf5edf1a00d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1476&amp;q=80 );"></div>
+            
+        </div>
+        <div class="list-right">
+            <div class="other-title">
+                SQL语法
+            </div>
+            <div class="other-summary"></div>
+            <div class="other-date">2023-5-25</div>
+        </div>
+    </div>
+</a>
+            </a>
+        
+            <a href="https://cuctut.github.io/posts/spring%E4%BA%8B%E5%8A%A1/">
+                
+<a href="https://cuctut.github.io/posts/spring%E4%BA%8B%E5%8A%A1/">
+    <div class="list-item">
+        <div class="icon-other-root">
+            
+                <div class="icon-other" style="background-image: url( https://images.pexels.com/photos/5632396/pexels-photo-5632396.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1%22 );"></div>
+            
+        </div>
+        <div class="list-right">
+            <div class="other-title">
+                Spring事务
+            </div>
+            <div class="other-summary">什么是事务？ 事务是逻辑上的一组操作，要么都执行，要么都不执行。 我们系统的每个业务方法可能包括了多个原</div>
+            <div class="other-date">2023-5-23</div>
+        </div>
+    </div>
+</a>
+            </a>
+        
+    </div>
+</div>
+        </div>
+        <div id="r2">
+            
+        </div> 
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+<div class="sponsor">
+    <div class="sponsor-self">
+        <div class="sponsor-title">赞赏</div>
+        <div class="sponsor-btn">
+            
+                
+                    
+                        <div class="sponsor-btn-1 border-r">Wechat</div>
+                    
+                
+                
+            
+                
+                    
+                        <div class="sponsor-btn-2 border-l">Alipay</div>
+                    
+                
+                
+            
+        </div>
+        
+        <div class="sponsor-img">
+            
+                
+                    <img class="sponsor-img-1" src="/images/sponsor/wechat.jpeg" alt="">
+                
+                
+            
+                
+                    <img class="sponsor-img-2" src="/images/sponsor/alipay.jpeg" alt="" style="display: none;">
+                
+                
+            
+        </div>
+        <div class="cancel efct-button">取消</div>
+    </div>
+</div>
+
+
+        </div>
+
+        <footer class="footer">
+    
+        <div class="container">
+            <div class="footer-items">
+                
+                    <div class="footer-item">
+                        <i class="fa fa-user"></i> <span id="busuanzi_value_site_pv"></span> |
+                        <i class="fa fa-eye"></i> <span id="busuanzi_value_site_uv"></span>
+                    </div>
+                
+                
+                    <div class="footer-item">
+                        © 2022-2023 <a href="https://github.com/Cuctut">Cuctut</a>
+                    </div>
+                
+                
+                    <div class="footer-item">
+                        Theme by <a href="https://github.com/xioyito/NewBee">NewBee</a> | Powered by <a href="https://gohugo.io/">Hugo</a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+    
+        
+    <div>
+        <meting-js
+            server = "netease"
+            type = "playlist"
+            id = "482655706"
+            fixed = "true"
+            autoplay = "false"
+            loop = "all"
+            order = "list"
+            preload = "auto"
+            list-folded = ""
+            list-max-height = "250px"
+            lrc-type = "1">
+        </meting-js>
+    </div>
+
+    
+</footer>
+
+
         
         <div class="search-root">
     <div class="search-zz"></div>
