@@ -3,18 +3,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Cuctut&#39;s blog | About</title>
+    <title>Cuctut&#39;s blog | 一篇文章入门 Nginx</title>
     <meta name="description" content=" ">
-    <link rel="canonical" href="https://cuctut.github.io/about/" />
+    <link rel="canonical" href="https://cuctut.github.io/posts/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%85%A5%E9%97%A8nginx/" />
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <meta property="og:title" content="About" />
+    <meta property="og:title" content="一篇文章入门 Nginx" />
 <meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://cuctut.github.io/about/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cuctut.github.io/posts/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%85%A5%E9%97%A8nginx/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-17T16:19:48+08:00" />
+<meta property="article:modified_time" content="2023-08-17T16:19:48+08:00" />
 
 
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="About"/>
+<meta name="twitter:title" content="一篇文章入门 Nginx"/>
 <meta name="twitter:description" content=""/>
 
     
@@ -204,24 +206,30 @@
 
 
 
-    
-        
-        
-        
-    
-
-
 
 
     <div class="hero">
         
             <div class="hero-img">
-                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/top.jpg" alt="">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/default/default3.jpg" alt="">
             </div>
         
         <div class="hero-content">
-            <div class="hero-title">关于</div>
-            <div>description of about page</div>
+            <div class="hero-title">一篇文章入门 Nginx</div>
+            <div class="hero-subtitle"></div>
+            <div class="hero-date">
+                    <span class="no-wrap"><i class="fa fa-calendar"></i> 发布于: 2023-8-17 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-calendar-check-o"></i> 更新于: 2023-8-17 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-folder"></i>
+                        未收录
+                        
+                    </span>    
+            </div>
+            <div class="timelong">
+                <span class="no-wrap"><i class="fa fa-pencil"></i> 文章字数: 6837 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-clock-o"></i> 阅读时间: 14 分钟 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-eye"></i> 阅读量: <span id="busuanzi_value_page_pv"></span></span>
+            </div>
         </div>
     </div>
 
@@ -255,10 +263,587 @@
     
         <div class="content">
             <div class="content-self">
-                <h2 id="about">About</h2>
+                <h1 id="概述">概述</h1>
+<p>在此之前我对 Nginx 的了解还只是会抄会用的地步，用它进行简单的路由和静态页面的发送，一些概念和思想没有深入的理解，现在写一篇总结加深学习。</p>
+<h1 id="什么是-nginx">什么是 Nginx</h1>
+<p>官方的回答是：</p>
+<blockquote>
+<p>nginx (pronounced &ldquo;engine x&rdquo;) is a free open source web server written by Igor Sysoev, a Russian software engineer. Since its public launch in 2004, nginx has focused on high performance, high concurrency and low memory usage. Additional features on top of the web server functionality, like load balancing, caching, access and bandwidth control, and the ability to integrate efficiently with a variety of applications, have helped to make nginx a good choice for modern website architectures. Currently nginx is the second most popular open source web server on the Internet.</p>
+</blockquote>
+<p>也就是说：Nginx 是一个 <strong>轻量级/高性能/反向代理</strong> 的 Web 服务器</p>
+<p>其实回答的更多是为什么要用 Nginx，有什么好处？简单总结了以下几点：</p>
+<ul>
+<li>轻量：内存消耗小，开启 10 个 nginx 才占 150M 内存</li>
+<li>高性能：可处理2-3万并发连接数，官方称能支持5万并发</li>
+<li>反向代理：可以不暴露正式的服务器 IP 地址，安全，还实现了负载均衡</li>
+<li>节省宽带：支持GZIP压缩，可以添加浏览器本地缓存</li>
+<li>其他：跨平台、配置简单、稳定性高、高效处理静态文件、内置的健康检查功能&hellip;</li>
+</ul>
+<blockquote>
+<p>关于跨平台：Windows 版本的 nginx 更像是一个概念验证，而不是一个功能齐全的移植。nginx 和 Windows 内核架构有一定的限制，目前不能很好地交互。已知的问题包括并发连接数量少得多，性能下降，没有缓存和带宽监管。</p>
+</blockquote>
+<p>众多特征中，其高性能和反向代理一直是 Nginx 的主要竞争点，特别是高性能，那么什么是反向代理？为什么要反向代理？为什么 Nginx 可以在轻量的同时实现高性能呢？</p>
+<h2 id="nginx-反向代理负载均衡">Nginx 反向代理（负载均衡）</h2>
+<p>首先复习下什么是反向代理？通俗的说，如果正向代理是用户端发送请求经过自己配置好的代理服务器到达指定的目标服务器，Nginx 反方代理则是请求统一被 Nginx 接收，由 Nginx 反向代理，<strong>非人为的</strong>、而是 Nginx 按照一定的规则分发给后端的业务处理服务器进行处理。</p>
+<p>建议看完一篇更详细的文章：<a href="https://zhuanlan.zhihu.com/p/464965616">深入理解 http 反向代理（nginx）</a></p>
+<p>这样做的最大的好处是可以隐藏源服务器的存在和特征。它充当互联网和 web 服务器之间的中间层。这对于安全方面来说是很好的，特别是当使用 web 托管服务时。同时，由于可以反向代理，也就能实现负载均衡。推荐文章还提及可以进行协议的转换。</p>
+<blockquote>
+<p>tip
+另外需要说的是, 一般提到反向代理, 通常是指 http 反向代理, 但反向代理的范围可以更大, 比如 tcp 反向代理, 在这里, 不打算讨论 tcp 之类的反向代理, 当文中说到反向代理时, 指的就是 http 反向代理。</p>
+</blockquote>
+<p>那么负载均衡有哪些策略？</p>
+<h3 id="负载均衡策略">负载均衡策略</h3>
+<ol>
+<li>
+<p>轮询(默认)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">upstream backserver <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    server 192.168.0.12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    server 192.168.0.13<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>权重 weight</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">upstream backserver <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    server 192.168.0.12 <span class="nv">weight</span><span class="o">=</span>2<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    server 192.168.0.13 <span class="nv">weight</span><span class="o">=</span>3<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>ip_hash(IP绑定)</p>
+<p>每个请求按访问IP的哈希结果分配，使来自同一个IP的访客固定访问一台后端服务器，并且可以有效解决动态网页存在的 <strong>session 共享问题</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">upstream backserver <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    server 192.168.0.12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    server 192.168.0.13<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>fair(第三方插件)</p>
+<p>安装upstream_fair模块。对比 weight、ip_hash更加智能的负载均衡算法，fair算法可以根据页面大小和加载时间长短智能地进行负载均衡，响应时间短的优先分配。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">upstream backserver <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    server 192.168.0.12<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    server 192.168.0.13<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="nginx-高性能及其架构">Nginx 高性能（及其架构）</h2>
+<p>讲高性能之前，我们先要了解 nginx 的高性能解决了什么问题？</p>
+<h3 id="基于进程-vs-基于事件">基于进程 vs 基于事件</h3>
+<p>传统上，<strong>基于进程或线程</strong> 的 web 服务器模型，在涉及处理并发连接时，常常使用单独的进程或线程处理每个连接，并阻塞网络或输入/输出操作。根据应用程序的不同，它在内存和CPU方面可能非常低效。生成一个单独的进程或线程需要准备一个新的运行时环境，包括分配堆和堆栈内存，以及创建一个新的执行上下文。创建这些项还需要花费额外的CPU时间，这可能最终导致性能下降，因为过多的上下文切换会导致线程抖动。</p>
+<p>所有这些复杂性在 Apache 等较老的 web 服务器架构中表现出来。这是在提供一组丰富的通用特性和优化服务器资源使用之间的权衡。</p>
+<p>所以从一开始，nginx 就打算成为一个专业的工具，在实现网站动态增长的同时，实现更高的性能、密度和更经济地使用服务器资源，所以它遵循了一个不同的模型。实际上，它的灵感来自于各种操作系统中正在进行的 <strong>基于事件</strong> 的高级机制的开发。</p>
+<p>基于后者，最终形成的是一个 <strong>模块化的、事件驱动的、异步的、单线程的、非阻塞的</strong> 架构，它成为了 nginx 代码的基础。</p>
+<p>因此，Nginx 大量使用 <strong>多路复用</strong> 和 <strong>事件通知</strong>，并将接收到的特定任务分配给单独的 <strong>进程</strong>。</p>
+<p>在这些有限的<strong>单线程</strong>进程中，所有分配到手的特定任务都是在一个高效的运行循环中处理的。这就像分发任务给流水线的工人，所以这些单线程进程被称作 <code>workers</code>，每个 worker 每秒可以处理数千个并发连接和请求。</p>
+<p><img src="/images/architecture.png" alt="architecture"></p>
+<p>因为 nginx 不会为每个连接 fork 一个进程或线程，所以在大多数情况下，内存使用是非常保守和高效的。nginx 也节省了 CPU 周期，因为没有进程或线程的持续创建-销毁模式。nginx 所做的是检查网络和存储的状态，初始化新的连接，将它们添加到运行循环中，并<strong>异步处理</strong>直到完成，此时连接被释放并从运行循环中移除。结合对系统调用的谨慎使用和对pool 和 slab 内存分配器等支持接口的精确实现，nginx 即使在极端工作负载下也能实现中低的 CPU 使用率。</p>
+<p>所以，什么是运行循环？如何实现了异步？要进一步理解 Nginx 高性能的实现，就有必要了解每一个 worker 是如何工作的。</p>
+<h3 id="worker">Worker</h3>
+<p>nginx worker 的代码包括核心和功能模块。</p>
+<ul>
+<li>
+<p><strong>核心</strong> 是负责维护一个紧密的运行循环，并在请求处理的每个阶段执行模块代码的适当部分（其本质也是一个模块）。</p>
+</li>
+<li>
+<p><strong>模块</strong> 拥有不同的化身，即核心模块、事件模块、阶段处理程序、协议、变量处理程序、过滤器、上游和负载平衡器。负责各种不同功能，如读取或写入网络和存储、转换内容、做出站过滤、操作请求并在代理被激活时将请求传递给上游服务器等。</p>
+</li>
+</ul>
+<blockquote>
+<p>tip
+模块部分的梳理翻译可能词不达意，原文是：nginx modules come in slightly different incarnations, namely core modules, event modules, phase handlers, protocols, variable handlers, filters, upstreams and load balancers.</p>
+</blockquote>
+<p>核心运行高效率的循环，这个循环是 worker 代码中最复杂的部分，包含全面的内部调用，并很大程度上依赖于异步任务处理的思想，对应模块化的架构。<strong>关键原则是尽可能不阻塞</strong>（nginx 仍然可以阻塞的唯一情况是当工作进程没有足够的磁盘存储性能时）。</p>
+<p>模块负责各自的工作，这种模块化架构通常允许开发人员在不修改 Nginx 核心的情况下扩展 web 服务器功能集。这种分工一方面提高了运行的效率，另一方面方便维护和扩展（目前还不支持动态加载模块）。</p>
+<h3 id="io优化">I/O优化</h3>
+<p>nginx 要处理各种操作，包括接收、处理和管理网络连接，或本地的内容检索，这对 I/O 性能有一定要求。在处理这些操作时，nginx 除了使用事件通知机制，还做了大量磁盘 I/O 性能增强（在 Linux、Solaris 和基于 BSD 的操作系统中），如<code>kqueue</code>，<code>epoll</code> 和 <code>event ports</code>。</p>
+<p>针对每个基于 unix 的操作系统，nginx 使用不同的方法进行多路复用和高级I/O操作，进行了大量优化的，这也是说 nginx 高性能的重要原因。</p>
+<h2 id="小总结">小总结</h2>
+<p>nginx 在基于事件的高级机制下开发，避免多线程带来的缺点，以单线程的形式，结合模块化、异步处理的思想，尽可能减少阻塞，同时因为模块化、异步的特征，实现了反向代理、负载均衡等功能，再结合 I/O 优化，实现中低负载下的高并发。</p>
+<h1 id="nginx-配置文件-nginxconf">Nginx 配置文件 nginx.conf</h1>
+<p>在 Linux 下查看目录结构：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># tree /usr/local/nginx</span>
+</span></span><span class="line"><span class="cl">/usr/local/nginx
+</span></span><span class="line"><span class="cl">├── client_body_temp
+</span></span><span class="line"><span class="cl">├── conf                <span class="c1"># Nginx所有配置文件的目录</span>
+</span></span><span class="line"><span class="cl">│ ├── fastcgi.conf          <span class="c1"># fastcgi相关参数的配置文件</span>
+</span></span><span class="line"><span class="cl">│ ├── fastcgi.conf.default  <span class="c1"># fastcgi.conf的原始备份文件</span>
+</span></span><span class="line"><span class="cl">│ ├── fastcgi_params        <span class="c1"># fastcgi的参数文件</span>
+</span></span><span class="line"><span class="cl">│ ├── fastcgi_params.default
+</span></span><span class="line"><span class="cl">│ ├── koi-utf
+</span></span><span class="line"><span class="cl">│ ├── koi-win
+</span></span><span class="line"><span class="cl">│ ├── mime.types            <span class="c1"># 媒体类型</span>
+</span></span><span class="line"><span class="cl">│ ├── mime.types.default
+</span></span><span class="line"><span class="cl">│ ├── nginx.conf            <span class="c1"># Nginx主配置文件</span>
+</span></span><span class="line"><span class="cl">│ ├── nginx.conf.default
+</span></span><span class="line"><span class="cl">│ ├── scgi_params           <span class="c1"># scgi相关参数文件</span>
+</span></span><span class="line"><span class="cl">│ ├── scgi_params.default
+</span></span><span class="line"><span class="cl">│ ├── uwsgi_params          <span class="c1"># uwsgi相关参数文件</span>
+</span></span><span class="line"><span class="cl">│ ├── uwsgi_params.default
+</span></span><span class="line"><span class="cl">│ └── win-utf
+</span></span><span class="line"><span class="cl">├── fastcgi_temp        <span class="c1"># fastcgi临时数据目录</span>
+</span></span><span class="line"><span class="cl">├── html                <span class="c1"># Nginx默认站点目录</span>
+</span></span><span class="line"><span class="cl">│ ├── 50x.html              <span class="c1"># 错误页面优雅替代显示文件，例如当出现502错误时会调用此页面</span>
+</span></span><span class="line"><span class="cl">│ └── index.html            <span class="c1"># 默认的首页文件</span>
+</span></span><span class="line"><span class="cl">├── logs                <span class="c1"># Nginx日志目录</span>
+</span></span><span class="line"><span class="cl">│ ├── access.log            <span class="c1"># 访问日志文件</span>
+</span></span><span class="line"><span class="cl">│ ├── error.log             <span class="c1"># 错误日志文件</span>
+</span></span><span class="line"><span class="cl">│ └── nginx.pid             <span class="c1"># pid文件，Nginx进程启动后，会把所有进程的ID号写到此文件</span>
+</span></span><span class="line"><span class="cl">├── proxy_temp          <span class="c1"># 临时目录</span>
+</span></span><span class="line"><span class="cl">├── sbin                <span class="c1"># Nginx命令目录</span>
+</span></span><span class="line"><span class="cl">│ └── nginx                 <span class="c1"># Nginx的启动命令</span>
+</span></span><span class="line"><span class="cl">├── scgi_temp           <span class="c1"># 临时目录</span>
+</span></span><span class="line"><span class="cl">└── uwsgi_temp          <span class="c1"># 临时目录</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以找到 nginx.conf，内容如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">worker_processes 1；            <span class="c1"># worker进程的数量</span>
+</span></span><span class="line"><span class="cl">events <span class="o">{</span>                        <span class="c1"># 事件区块</span>
+</span></span><span class="line"><span class="cl">    worker_connections 1024；   <span class="c1"># 每个worker进程支持的最大连接数</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">http <span class="o">{</span>                          <span class="c1"># HTTP区块</span>
+</span></span><span class="line"><span class="cl">    include mime.types；        <span class="c1"># Nginx支持的媒体类型库文件</span>
+</span></span><span class="line"><span class="cl">    default_type application/octet-stream； <span class="c1"># 默认的媒体类型</span>
+</span></span><span class="line"><span class="cl">    endfile on；                <span class="c1"># 开启高效传输模式</span>
+</span></span><span class="line"><span class="cl">    keepalive_timeout 65；      <span class="c1"># 连接超时</span>
+</span></span><span class="line"><span class="cl">    server <span class="o">{</span>                    <span class="c1"># 第一个Server区块开始，表示一个独立的虚拟主机站点</span>
+</span></span><span class="line"><span class="cl">        listen 80；             <span class="c1"># 提供服务的端口，默认80</span>
+</span></span><span class="line"><span class="cl">        server_name localhost； <span class="c1"># 提供服务的域名主机名</span>
+</span></span><span class="line"><span class="cl">        location / <span class="o">{</span>            <span class="c1"># 第一个location区块开始</span>
+</span></span><span class="line"><span class="cl">            root html；         <span class="c1"># 站点的根目录，相当于Nginx的安装目录</span>
+</span></span><span class="line"><span class="cl">            index index.html index.htm； <span class="c1"># 默认的首页文件，多个用空格分开</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        error_page <span class="m">500502503504</span> /50x.html； <span class="c1"># 出现对应的http状态码时，使用50x.html回应客户</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">location</span> <span class="o">=</span> /50x.html <span class="o">{</span>  <span class="c1"># location区块开始，访问50x.html</span>
+</span></span><span class="line"><span class="cl">            root html；         <span class="c1"># 指定对应的站点目录为html</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">......
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="location">location</h2>
+<p>location指令的作用是根据用户请求的URI来执行不同的应用，也就是根据用户请求的网站URL进行匹配，匹配成功即进行相关的操作。</p>
+<table>
+<thead>
+<tr>
+<th>匹配符</th>
+<th>匹配规则</th>
+<th>优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>=</td>
+<td>精确匹配</td>
+<td>1</td>
+</tr>
+<tr>
+<td>^~</td>
+<td>以某个字符串开头</td>
+<td>2</td>
+</tr>
+<tr>
+<td>~</td>
+<td>区分大小写的正则匹配</td>
+<td>3</td>
+</tr>
+<tr>
+<td>~*</td>
+<td>不区分大小写的正则匹配</td>
+<td>4</td>
+</tr>
+<tr>
+<td>!~</td>
+<td>区分大小写不匹配的正则</td>
+<td>5</td>
+</tr>
+<tr>
+<td>!~*</td>
+<td>不区分大小写不匹配的正则</td>
+<td>6</td>
+</tr>
+<tr>
+<td>/</td>
+<td>通用匹配，任何请求都会匹配到</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<h2 id="限流配置">限流配置</h2>
+<p>Nginx 限流就是限制用户请求速度，防止服务器受不了，限流有3种：</p>
+<ol>
+<li>正常限制访问频率（正常流量）</li>
+<li>突发限制访问频率（突发流量）</li>
+<li>限制并发连接数</li>
+</ol>
+<p>Nginx 的限流都是基于漏桶流算法，之后会说什么是漏桶流算法。</p>
+<h3 id="正常限制访问频率正常流量">正常限制访问频率（正常流量）</h3>
+<p>限制一个用户发送的请求，Nginx 多久接收一个请求。
+Nginx 中使用 <code>ngx_http_limit_req_module</code> 模块来限制的访问频率，限制的原理实质是基于漏桶算法原理来实现的。在nginx.conf配置文件中可以使用 <code>limit_req_zone</code> 命令及 <code>limit_req</code> 命令限制单个IP 的请求处理频率。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1">#定义限流维度，一个用户一分钟一个请求进来，多余的全部漏掉，1r/s代表1秒一个请求，1r/m一分钟接收一个请求</span>
+</span></span><span class="line"><span class="cl">limit_req_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>one:10m <span class="nv">rate</span><span class="o">=</span>1r/m<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#绑定限流维度</span>
+</span></span><span class="line"><span class="cl">server<span class="o">{</span>
+</span></span><span class="line"><span class="cl">    location/seckill.html<span class="o">{</span>
+</span></span><span class="line"><span class="cl">        limit_req <span class="nv">zone</span><span class="o">=</span>zone<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        proxy_pass http://lj_seckill<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="突发限制访问频率突发流量">突发限制访问频率（突发流量）</h3>
+<p>上面的配置一定程度可以限制访问频率，但是也存在着一个问题：如果突发流量超出请求被拒绝处理，无法处理活动时候的突发流量，这时候应该如何进一步处理呢？</p>
+<p>Nginx提供 <code>burst</code> 参数结合 <code>nodelay</code> 参数可以解决流量突发的问题，可以设置能处理的超过设置的请求数外能额外处理的请求数。我们可以将之前的例子添加 <code>burst</code> 参数以及 <code>nodelay</code> 参数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1">#定义限流维度，一个用户一分钟一个请求进来，多余的全部漏掉，1r/s代表1秒一个请求，1r/m一分钟接收一个请求</span>
+</span></span><span class="line"><span class="cl">limit_req_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>one:10m <span class="nv">rate</span><span class="o">=</span>1r/m<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#绑定限流维度</span>
+</span></span><span class="line"><span class="cl">server<span class="o">{</span>
+</span></span><span class="line"><span class="cl">    location/seckill.html<span class="o">{</span>
+</span></span><span class="line"><span class="cl">        limit_req <span class="nv">zone</span><span class="o">=</span>zone <span class="nv">burst</span><span class="o">=</span><span class="m">5</span> nodelay<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        proxy_pass http://lj_seckill<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>burst=5</code> 代表Nginx对于一个用户的请求会立即处理前五个，多余的就慢慢来，没有其他用户的请求我就处理你的，有其他的请求的话我Nginx就漏掉不接受你的请求。</p>
+<h3 id="限制并发连接数">限制并发连接数</h3>
+<p>Nginx中的 <code>ngx_http_limit_conn_module</code> 模块提供了限制并发连接数的功能，可以使用 <code>limit_conn_zone</code> 指令以及 <code>limit_conn</code> 执行进行配置。接下来我们可以通过一个简单的例子来看下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">http <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    limit_conn_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>myip:10m<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    limit_conn_zone <span class="nv">$server_name</span> <span class="nv">zone</span><span class="o">=</span>myServerName:10m<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    location / <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        limit_conn myip 10<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        limit_conn myServerName 100<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        rewrite / http://www.lijie.net permanent<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面配置了单个 IP 同时并发连接数最多只能 10 个连接，并且设置了整个虚拟服务器同时最大并发数最多只能100个链接。当然，只有当请求的 header 被服务器处理后，虚拟服务器的连接数才会计数。刚才有提到过 Nginx 是基于漏桶算法原理实现的，实际上限流一般都是<strong>基于漏桶算法</strong>和<strong>令牌桶算法</strong>实现的。接下来我们来看看两个算法的介绍。</p>
+<h2 id="简述-漏桶算法和令牌桶算法">简述 漏桶算法和令牌桶算法</h2>
+<h3 id="漏桶算法">漏桶算法</h3>
+<p>漏桶算法是网络世界中流量整形或速率限制时经常使用的一种算法，它的主要目的是控制数据注入到网络的速率，平滑网络上的突发流量。漏桶算法提供了一种机制，通过它，突发流量可以被整形以便为网络提供一个稳定的流量。也就是我们刚才所讲的情况。</p>
+<p>漏桶算法的机制如下：突发流量会进入到一个漏桶，漏桶会按照我们定义的速率依次处理请求，如果水流过大也就是突发流量过大就会直接溢出，则多余的请求会被拒绝。所以漏桶算法能控制数据的传输速率。</p>
+<p><img src="/images/bucket.jpg" alt="bucket"></p>
+<h3 id="令牌桶算法">令牌桶算法</h3>
+<p>令牌桶算法是网络流量整形和速率限制中最常使用的一种算法。典型情况下，令牌桶算法用来控制发送到网络上的数据的数目，并允许突发数据的发送。Google 开源项目 Guava 中的 RateLimiter 使用的就是令牌桶控制算法。</p>
+<p>令牌桶算法的机制如下：存在一个大小固定的令牌桶，会以恒定的速率源源不断产生令牌。如果令牌消耗速率小于生产令牌的速度，令牌就会一直产生直至装满整个令牌桶。</p>
+<p><img src="/images/token.jpg" alt="token"></p>
+<h1 id="用-nginx-解决前端跨域问题">用 nginx 解决前端跨域问题</h1>
+<p>有两种方法解决跨域问题</p>
+<h2 id="添加响应头解决跨域">添加响应头解决跨域</h2>
+<p>-用GPT生成的文案-</p>
+<p>在使用Nginx解决前端跨域问题时，你可以通过配置Nginx服务器来添加必要的HTTP响应头，以允许不同域之间的跨域请求。以下是一些步骤来实现这个目标：</p>
+<ol>
+<li>
+<p>编辑 Nginx 配置文件</p>
+<p>首先，需要编辑 Nginx 的配置文件。通常情况下，Nginx的配置文件位于 /etc/nginx/nginx.conf 或 /etc/nginx/conf.d/default.conf，具体位置取决于你的操作系统和Nginx的安装方式。</p>
+<p>用你喜欢的文本编辑器打开配置文件。</p>
+</li>
+<li>
+<p>添加跨域配置</p>
+<p>在你的Nginx配置文件中，找到你想要解决跨域问题的服务器块（server 块），然后添加以下配置，以允许跨域请求：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">location / <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 允许所有域的跨域请求</span>
+</span></span><span class="line"><span class="cl">    add_header <span class="s1">&#39;Access-Control-Allow-Origin&#39;</span> <span class="s1">&#39;*&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 允许指定的请求头</span>
+</span></span><span class="line"><span class="cl">    add_header <span class="s1">&#39;Access-Control-Allow-Headers&#39;</span> <span class="s1">&#39;Authorization, Content-Type&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 允许指定的请求方法</span>
+</span></span><span class="line"><span class="cl">    add_header <span class="s1">&#39;Access-Control-Allow-Methods&#39;</span> <span class="s1">&#39;GET, POST, OPTIONS&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 允许携带身份验证信息（例如Cookie）</span>
+</span></span><span class="line"><span class="cl">    add_header <span class="s1">&#39;Access-Control-Allow-Credentials&#39;</span> <span class="s1">&#39;true&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 预检请求的有效期（OPTIONS请求的响应）</span>
+</span></span><span class="line"><span class="cl">    add_header <span class="s1">&#39;Access-Control-Max-Age&#39;</span> 3600<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 是否允许将HTTP凭据（如Cookie和认证头）发送到服务器</span>
+</span></span><span class="line"><span class="cl">    add_header <span class="s1">&#39;Access-Control-Allow-Headers&#39;</span> <span class="s1">&#39;Authorization,Content-Type,Accept,Origin,DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Range,Range&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(</span><span class="nv">$request_method</span> <span class="o">=</span> <span class="s1">&#39;OPTIONS&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 预检请求的响应</span>
+</span></span><span class="line"><span class="cl">        add_header <span class="s1">&#39;Content-Length&#39;</span> 0<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        add_header <span class="s1">&#39;Access-Control-Allow-Origin&#39;</span> <span class="s1">&#39;*&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        add_header <span class="s1">&#39;Access-Control-Allow-Headers&#39;</span> <span class="s1">&#39;Authorization, Content-Type&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        add_header <span class="s1">&#39;Access-Control-Allow-Methods&#39;</span> <span class="s1">&#39;GET, POST, OPTIONS&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        add_header <span class="s1">&#39;Access-Control-Allow-Credentials&#39;</span> <span class="s1">&#39;true&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        add_header <span class="s1">&#39;Access-Control-Max-Age&#39;</span> 3600<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        add_header <span class="s1">&#39;Content-Type&#39;</span> <span class="s1">&#39;text/plain charset=UTF-8&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        add_header <span class="s1">&#39;Content-Length&#39;</span> 0<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> 204<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意，上述配置将允许所有域的跨域请求，但你可以根据需要进行自定义，例如将 &lsquo;Access-Control-Allow-Origin&rsquo; 的值更改为特定的域名。</p>
+</li>
+<li>
+<p>重启 Nginx 服务</p>
+<p>保存你的Nginx配置文件后，重启Nginx服务器，以使配置生效。你可以使用以下命令来重启Nginx，具体命令可能因你的操作系统而有所不同：</p>
+</li>
+</ol>
+<p>sudo service nginx restart</p>
+<blockquote>
+<p>tip
+请注意，配置Nginx解决跨域问题是一种常见的方法，但在实际应用中，你可能需要根据情况进行进一步的调整和配置，以确保安全性和正确性。同时，也可以考虑使用其他跨域解决方案，如JSONP、CORS（跨源资源共享）等，具体取决于你的需求和项目架构。</p>
+</blockquote>
+<h2 id="nginx-转发请求解决跨域">Nginx 转发请求解决跨域</h2>
+<p>当使用Nginx作为代理服务器来解决前端跨域问题时，你可以通过将跨域的请求转发到同一域内的接口来绕过浏览器的跨域限制。这个方法的核心思想是，前端发起的跨域请求实际上是发送到同一域内的Nginx服务器，然后Nginx服务器将请求转发到真正的目标服务器，再将目标服务器的响应返回给前端，从而绕过浏览器的跨域限制。</p>
+<p>下面是一个简单的示例来解释这个方法：</p>
+<p>假设你有一个前端应用部署在域名 <code>https://frontend.com</code>，而你的后端服务部署在域名 <code>https://backend.com</code>。你希望前端能够访问后端的接口，但是由于跨域限制，直接从前端向后端发起请求会被阻止。</p>
+<ol>
+<li>
+<p>配置 Nginx 作为代理
+在Nginx的配置中，你可以配置一个代理服务器块，将前端的跨域请求转发到后端服务器。以下是一个简化的Nginx配置示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-nginx" data-lang="nginx"><span class="line"><span class="cl"><span class="k">server</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">server_name</span> <span class="s">frontend.com</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kn">location</span> <span class="s">/api/</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kn">proxy_pass</span> <span class="s">https://backend.com/</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kn">proxy_set_header</span> <span class="s">Host</span> <span class="nv">$host</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kn">proxy_set_header</span> <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># ... 其他配置 ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这个配置中，当前端应用发送请求到 <code>/api/*</code> 路径时，Nginx会将请求转发到 <code>https://backend.com/*</code>。通过这种方式，前端实际上是与同一域内的 Nginx 服务器通信，从而绕过了浏览器的跨域限制。</p>
+</li>
+<li>
+<p>前端调用代理接口</p>
+<p>在前端应用中，你只需要将跨域的请求路径调整为 Nginx 代理的路径。例如，如果原本请求后端的路径是 <code>https://backend.com/api/data</code>，现在你可以调用 <code>https://frontend.com/api/data</code>，因为Nginx会将这个请求转发到后端。</p>
+<p>通过这种方法，前端实际上是通过与同一域内的Nginx服务器通信，来访问后端的接口，从而避免了浏览器的跨域限制。</p>
+</li>
+</ol>
+<p>选择哪种方法取决于你的项目需求和架构。如果你只需要解决基本的跨域问题，且后端支持CORS，那么使用响应头方式可能更为简单。如果你需要更灵活的控制，或者面对复杂的跨域情况，Nginx转发请求可能是一个更好的选择。</p>
+<h1 id="关于-最大连接数">关于 最大连接数</h1>
+<p>Nginx 作为通用服务器时，最大连接数：Worker 进程数量 x 单个 Worker 进程的最大连接数。</p>
+<p>Nginx 作为反向代理服务器时，最大连接数：（Worker 进程数量 x 单个 Worker 进程的最大连接数）/ 2。</p>
+<blockquote>
+<p>tip
+Nginx 反向代理时，会建立 Client 的连接和后端 Web Server 的连接，占用 2 个连接，对于 Client 来说，连接数减半。</p>
+</blockquote>
+<h1 id="关于-reload">关于 reload</h1>
+<p>根据 nginx 的进程模型：一个master和多个worker进程，当 nginx 在接收到 <code>reload</code> 指令时，并不会马上停止所有的 worker，而是 master 重新加载配置文件后启动新的 worker，并告诉老的 worker 可以结束，从而达到不停机的效果。</p>
+<h1 id="参考链接">参考链接</h1>
+<p><a href="https://aosabook.org/en/v2/nginx.html">The Architecture of Open Source Applications (Volume 2) nginx</a></p>
+<p><a href="https://www.zhihu.com/question/20441060/answer/2528451837">nginx为什么性能这么优越？</a></p>
             </div>
             
+                <div class="tags">
+                    
+                </div>
+            
         </div>
+        
+            
+                <div class="pre-next">
+                    
+    
+        
+        <a href="https://cuctut.github.io/posts/redis%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF%E9%97%AE%E9%A2%98&#43;%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="pre pre-last" style="text-align: center;">
+            <span class="pre-icon"><i class="fa fa-hand-o-left"></i></span>
+            <div class="pre-title-root">
+                <span>Redis缓存击穿问题&#43;解决方案</span>
+            </div>
+        </a>
+        
+    
+    
+
+                </div>
+            
         
     
 </div>
@@ -349,33 +934,16 @@
 
 
 
+    
+    
+
 
 <div class="other">
     <div class="other-up">
-        <div class="other-qita text-wbd">最新文章</div>
+        <div class="other-qita text-wbd">相关文章</div>
         <div class="xian"></div>
     </div>
     <div class="list">
-        
-            <a href="https://cuctut.github.io/posts/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%85%A5%E9%97%A8nginx/">
-                
-<a href="https://cuctut.github.io/posts/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%85%A5%E9%97%A8nginx/">
-    <div class="list-item">
-        <div class="icon-other-root">
-            
-                <div class="icon-other" style="background-image: url( /images/default/default3.jpg );"></div>
-            
-        </div>
-        <div class="list-right">
-            <div class="other-title">
-                一篇文章入门 Nginx
-            </div>
-            <div class="other-summary"></div>
-            <div class="other-date">2023-8-17</div>
-        </div>
-    </div>
-</a>
-            </a>
         
             <a href="https://cuctut.github.io/posts/redis%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF%E9%97%AE%E9%A2%98&#43;%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
                 
@@ -452,6 +1020,26 @@
             </div>
             <div class="other-summary"></div>
             <div class="other-date">2023-6-11</div>
+        </div>
+    </div>
+</a>
+            </a>
+        
+            <a href="https://cuctut.github.io/posts/sql%E8%AF%AD%E6%B3%95/">
+                
+<a href="https://cuctut.github.io/posts/sql%E8%AF%AD%E6%B3%95/">
+    <div class="list-item">
+        <div class="icon-other-root">
+            
+                <div class="icon-other" style="background-image: url( https://images.unsplash.com/photo-1543722615-dbf5edf1a00d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1476&amp;q=80 );"></div>
+            
+        </div>
+        <div class="list-right">
+            <div class="other-title">
+                SQL语法
+            </div>
+            <div class="other-summary"></div>
+            <div class="other-date">2023-5-25</div>
         </div>
     </div>
 </a>

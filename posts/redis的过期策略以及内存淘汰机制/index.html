@@ -3,18 +3,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Cuctut&#39;s blog | About</title>
+    <title>Cuctut&#39;s blog | Redis的过期策略以及内存淘汰机制</title>
     <meta name="description" content=" ">
-    <link rel="canonical" href="https://cuctut.github.io/about/" />
+    <link rel="canonical" href="https://cuctut.github.io/posts/redis%E7%9A%84%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E4%BB%A5%E5%8F%8A%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E6%9C%BA%E5%88%B6/" />
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <meta property="og:title" content="About" />
+    <meta property="og:title" content="Redis的过期策略以及内存淘汰机制" />
 <meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://cuctut.github.io/about/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cuctut.github.io/posts/redis%E7%9A%84%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E4%BB%A5%E5%8F%8A%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E6%9C%BA%E5%88%B6/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-14T16:38:35+08:00" />
+<meta property="article:modified_time" content="2022-10-01T00:00:00+00:00" />
 
 
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="About"/>
+<meta name="twitter:title" content="Redis的过期策略以及内存淘汰机制"/>
 <meta name="twitter:description" content=""/>
 
     
@@ -204,24 +206,30 @@
 
 
 
-    
-        
-        
-        
-    
-
-
 
 
     <div class="hero">
         
             <div class="hero-img">
-                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/top.jpg" alt="">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/default/default3.jpg" alt="">
             </div>
         
         <div class="hero-content">
-            <div class="hero-title">关于</div>
-            <div>description of about page</div>
+            <div class="hero-title">Redis的过期策略以及内存淘汰机制</div>
+            <div class="hero-subtitle"></div>
+            <div class="hero-date">
+                    <span class="no-wrap"><i class="fa fa-calendar"></i> 发布于: 2023-8-14 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-calendar-check-o"></i> 更新于: 2022-10-1 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-folder"></i>
+                        未收录
+                        
+                    </span>    
+            </div>
+            <div class="timelong">
+                <span class="no-wrap"><i class="fa fa-pencil"></i> 文章字数: 2431 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-clock-o"></i> 阅读时间: 5 分钟 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-eye"></i> 阅读量: <span id="busuanzi_value_page_pv"></span></span>
+            </div>
         </div>
     </div>
 
@@ -255,10 +263,89 @@
     
         <div class="content">
             <div class="content-self">
-                <h2 id="about">About</h2>
+                <h1 id="过期问题">过期问题</h1>
+<p>Redis 所有数据结构都可以设置过期时间，当到期时会自动删除，但是有这种情况：当我们在同一时间有很多的 key 过期，在单线程情况下，大量的删除会带来线程的长时间占用（相较于读写操作），那么 Redis 采用了什么方案来解决这个问题呢？</p>
+<h1 id="过期策略">过期策略</h1>
+<p>首先需要知道的是：Redis 将所有设置有过期时间的 key 都放到独立的字典中进行管理。字典的存在不是为了统一的删除，Redis 采用了惰性删除和定期扫描删除的方式，将一次性的过期删除操作拆分成多次，从而避免大量删除影响性能。</p>
+<p>接下来我们来看看 Redis 的具体方案。</p>
+<h2 id="惰性删除">惰性删除</h2>
+<p>惰性删除，顾名思义就是被动的、不预先的删除，让 key 只有在被访问时才会检查过期时间并判断是否删除。这种方式看似可以最大化节省资源，不用频繁去检查过期，但是，如果有大量的<strong>长时间不被访问</strong>的过期key存在时，这种惰性删除策略就会让内存资源被大量占用，很不友好。</p>
+<h2 id="定期扫描删除">定期扫描删除</h2>
+<p>为了解决这个问题，Redis 结合采用了定期扫描删除的策略：</p>
+<p>在存放带有过期时间 key 的字典中，Redis 采用周期性扫描的方式，每次扫描不会遍历到字典中所有的key，而是采用一种简单的贪心策略：</p>
+<ol>
+<li>从字典中随机取20个keys；</li>
+<li>删除所选keys中过期的key；</li>
+<li>如果过期的key的占比超过1/4，重复12步骤；</li>
+</ol>
+<p>从第三步操作不难看出，Redis 利用过期数据占比的方式，优化删除频率。</p>
+<p>这种循环最终会让字典中过期key的分布变得稀疏，但值得注意的是：极端情况下，当某一时间有大批大批的 keys 过期时，这种循坏删除的操作还是会导致占用线程的现象，另外，大量的内存释放会让内存管理器频繁的回收内存页，也要消耗一定的CPU资源。</p>
+<p>因此，在实际开发中，还是要尽量避免将大量的 keys 设置在同一时间，可以在设置过期时间时对其进行合理范围内的随机偏移，达到错峰删除。</p>
+<h2 id="区别">区别</h2>
+<p>惰性删除是被动的、零散的删除；定期扫描删除是主动的、批量的删除。</p>
+<h1 id="从库的过期策略">从库的过期策略</h1>
+<p>如果搭建了主从结构，从库不会进行过期扫描。</p>
+<p>从库对过期的处理是被动的。当主库处理了到期的 key 时，会在 AOF 文件里增加一条 del 指令，同步到所有的从库，从库通过执行这条 del 指令删除过期的 key。</p>
+<p>因为指令同步是异步进行的，所以主库过期的 key 的 del 指令没有及时同步到从库的话，会出现主从数据的不一致，某段时间内主库没有的数据在从库里还存在，集群环境分布式锁的算法漏洞就是因为这个同步延迟产生的。</p>
+<h1 id="过期策略还远远不够">过期策略还远远不够？</h1>
+<p>虽然 Redis 采用惰性删除和定期扫描删除，已经可以实现较高性能的过期 keys 删除，但再想象这样一种情况：如果某一段时间定期扫描删除漏掉了很多过期 keys 或来不及处理它们，这些 keys 也没有被访问所以走不了惰性删除，时间一长还是会导致大量的无效内存占用，需要一段时间来消化，严重点的话会让预设的内存耗尽。显然，我们还需要一个内存淘汰机制来应对这种情况。</p>
+<h1 id="内存淘汰机制">内存淘汰机制</h1>
+<p>当 Redis 内存超出物理内存限制时，内存的数据会开始和磁盘产生频繁的交换(swap)，交换会让 Redis 的性能急剧下降，对于访问量比较频繁的 Redis 来说，这样龟速的存取效率基本上等于不可用。</p>
+<p>在生产环境中我们是不允许 Redis 出现交换行为的，为了限制最大使用内存，Redis 提供了配置参数 <strong>maxmemory</strong> 来限制内存超出期望大小。当实际内存超出 maxmemory 时，Redis提供了几种可选策略(<strong>maxmemory-policy</strong>)来让用户决定该如何腾出新的空间以继续提供读写服务。</p>
+<p>8 种内存淘汰策略如下：</p>
+<ul>
+<li>noeviction(<strong>默认</strong>)：不做任何的清理工作，在内存越限后所有写入操作会返回OOM(out of memory)，读操作能正常进行；</li>
+<li>volatile-lru(least recently used)：最近最少使用算法，从设置了过期时间的键中选择空转时间最长的，即最长没被使用的键值对清除掉；</li>
+<li>volatile-lfu(least frequently used)：最近最不经常使用算法，从设置了过期时间的键中选择某段时间之内使用频次最小的键值对清除掉（区别在于时间和频次）；</li>
+<li>volatile-ttl：从设置了过期时间的键中选择过期时间最早的键值对清除；</li>
+<li>volatile-random：从设置了过期时间的键中，随机选择键进行清除；</li>
+<li>allkeys-lru：最近最少使用算法，从所有的键中选择空转时间最长的键值对清除；</li>
+<li>allkeys-lfu：最近最不经常使用算法，从所有的键中选择某段时间之内使用频次最少的键值对清除；</li>
+<li>allkeys-random：所有的键中，随机选择键进行删除；</li>
+</ul>
+<p>注意：volatile 策略只会针对带过期时间的key进行淘汰，allkeys 策略会对所有的key进行淘汰。如果只是拿 Redis 做缓存，那应该使用 allkeys 策略，客户端写缓存时不必携带过期时间。如果你还想同时使用 Redis 的持久化功能，就使用 volatile 策略，这样可以保留没有设置过期时间的key，它们是永久的key 不会被 LRU 算法淘汰。</p>
+<h2 id="lru算法">LRU算法</h2>
+<p>实现LRU算法，除了需要 key/value 字典外，还需要附加一个链表，链表中的元素按照一定的顺序进行排列。在LRU算法中这个顺序就是最近一次使用的时间。</p>
+<p>当空间满的时候，会踢掉链表尾部的元素。当字典的某个元素被访问时，它在链表中的位置会被移动到表头。所以链表的元素排列顺序就是元素最近被访问的时间顺序，位于链表尾部的元素就是不常用的元素，会被优先踢掉。位于表头的元素就是最近刚刚被人用过的元素，所以暂时不会被踢。</p>
+<h2 id="优化的近似lru算法">优化的近似LRU算法</h2>
+<p>Redis 使用的是一种近似 LRU 算法。之所以不使用 LRU 算法，是因为链表需要消耗大量的额外的内存，需要对现有的数据结构进行较大的改造。近似 LRU 算法则很简单，在现有数据结构的基础上使用随机采样法来淘汰元素，能达到和 LRU 算法非常近似的效果。</p>
+<p>Redis 为实现近似 LRU 算法，它给每个 key 增加了一个额外的小字段，这个字段的长度是 24 个 bit，也就是最后一次被访问的时间戳。当 Redis 执行写操作时，发现内存超出 maxmemory，就会执行一次 LRU 淘汰算法。这个算法也很简单，就一随机采样出5(可以配置maxmemory-samples)个key，然后淘汰掉最旧的key，如果淘汰后内存还是超出  maxmemory，那就继续随机采样淘汰，直到内存低于 maxmemory 为止。</p>
+<p>采样数量可以通过config文件修改，采样数量越大，越趋近于LRU算法。</p>
             </div>
             
+                <div class="tags">
+                    
+                </div>
+            
         </div>
+        
+            
+                <div class="pre-next">
+                    
+    
+        
+        <a href="https://cuctut.github.io/posts/redis%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%AB%E5%86%85%E5%AD%98&#43;%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%BF%98%E4%B8%8D%E5%A4%9F/" class="pre">
+            <span class="pre-icon"><i class="fa fa-hand-o-left"></i></span>
+            <div class="pre-title-root">
+                <span>Redis为什么快？内存&#43;多线程还不够！</span>
+            </div>
+        </a>
+        
+
+        
+        <a href="https://cuctut.github.io/posts/redis%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF%E9%97%AE%E9%A2%98&#43;%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="next">
+            <div class="next-title-root">
+                <span>Redis缓存击穿问题&#43;解决方案</span>
+            </div>
+            <span class="next-icon"><i class="fa fa-hand-o-right"></i></span>
+        </a>
+        
+
+    
+    
+
+                </div>
+            
         
     
 </div>
@@ -349,10 +436,13 @@
 
 
 
+    
+    
+
 
 <div class="other">
     <div class="other-up">
-        <div class="other-qita text-wbd">最新文章</div>
+        <div class="other-qita text-wbd">相关文章</div>
         <div class="xian"></div>
     </div>
     <div class="list">
@@ -397,26 +487,6 @@
 </a>
             </a>
         
-            <a href="https://cuctut.github.io/posts/redis%E7%9A%84%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E4%BB%A5%E5%8F%8A%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E6%9C%BA%E5%88%B6/">
-                
-<a href="https://cuctut.github.io/posts/redis%E7%9A%84%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E4%BB%A5%E5%8F%8A%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E6%9C%BA%E5%88%B6/">
-    <div class="list-item">
-        <div class="icon-other-root">
-            
-                <div class="icon-other" style="background-image: url( /images/default/default3.jpg );"></div>
-            
-        </div>
-        <div class="list-right">
-            <div class="other-title">
-                Redis的过期策略以及内存淘汰机制
-            </div>
-            <div class="other-summary"></div>
-            <div class="other-date">2023-8-14</div>
-        </div>
-    </div>
-</a>
-            </a>
-        
             <a href="https://cuctut.github.io/posts/redis%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%AB%E5%86%85%E5%AD%98&#43;%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%BF%98%E4%B8%8D%E5%A4%9F/">
                 
 <a href="https://cuctut.github.io/posts/redis%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%AB%E5%86%85%E5%AD%98&#43;%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%BF%98%E4%B8%8D%E5%A4%9F/">
@@ -452,6 +522,26 @@
             </div>
             <div class="other-summary"></div>
             <div class="other-date">2023-6-11</div>
+        </div>
+    </div>
+</a>
+            </a>
+        
+            <a href="https://cuctut.github.io/posts/sql%E8%AF%AD%E6%B3%95/">
+                
+<a href="https://cuctut.github.io/posts/sql%E8%AF%AD%E6%B3%95/">
+    <div class="list-item">
+        <div class="icon-other-root">
+            
+                <div class="icon-other" style="background-image: url( https://images.unsplash.com/photo-1543722615-dbf5edf1a00d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1476&amp;q=80 );"></div>
+            
+        </div>
+        <div class="list-right">
+            <div class="other-title">
+                SQL语法
+            </div>
+            <div class="other-summary"></div>
+            <div class="other-date">2023-5-25</div>
         </div>
     </div>
 </a>
